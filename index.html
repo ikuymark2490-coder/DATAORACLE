@@ -923,13 +923,25 @@
     <div id="view-forgot-contact" class="view">
         <div class="form-content">
             <h2>ส่งคำร้องขอกู้บัญชี</h2>
-            <div class="form-subtitle">ระบุ ID หรือหลักฐานอื่นๆ เราจะติดต่อกลับ</div>
-            <div class="form-group"><label>อีเมลที่ติดต่อได้</label><input type="email"></div>
-            <div class="form-group">
-                <label>ชื่อ ID / รายละเอียดเพิ่มเติม</label>
-                <textarea rows="3"></textarea>
+            <div class="form-subtitle" style="color:var(--normal-hue); background:#e0f2fe; padding:10px; border-radius:8px;">
+                💡 <b>หมายเหตุ:</b> งานนี้เป็นทีมงานตรวจสอบ (Manual) อาจใช้เวลาสักพัก หากข้อมูลตรง เราจะส่งรหัสผ่านใหม่กลับไปทางอีเมลครับ
             </div>
-            <button class="btn-submit" onclick="showToast('ส่งคำร้องสำเร็จ ระบบจะแจ้งผลทางอีเมล','success'); goHome()">ส่งคำร้อง</button>
+            
+            <div class="form-group" style="margin-top:20px;">
+                <label>1. ชื่อ ID ของคุณ</label>
+                <input type="text" id="recover-id" placeholder="ID ที่ใช้เข้าสู่ระบบ">
+            </div>
+            <div class="form-group">
+                <label>2. ชื่อเล่น หรือ ชื่อประวัติแชทอันไหนก็ได้ 1 ชื่อ</label>
+                <input type="text" id="recover-proof" placeholder="หลักฐานยืนยันตัวตนว่าเป็นคุณจริงๆ">
+            </div>
+            <div class="form-group">
+                <label>3. อีเมลที่สะดวกให้ติดต่อกลับ</label>
+                <input type="email" id="recover-email" placeholder="เช่น user@gmail.com">
+            </div>
+            
+            <button class="btn-submit" onclick="sendRecoveryEmail()">ส่งข้อมูลให้แอดมิน</button>
+            <button class="btn-text" onclick="showView('view-forgot','กู้คืนบัญชี')">ย้อนกลับ</button>
         </div>
     </div>
 
@@ -1409,6 +1421,55 @@ function updateSidebarUI() {
         btnSettings.style.display = 'none';
     }
 }
+/* ==============================================================
+   EMAIL RECOVERY (EmailJS)
+============================================================== */
+async function sendRecoveryEmail() {
+    const rId = document.getElementById('recover-id').value.trim();
+    const rProof = document.getElementById('recover-proof').value.trim();
+    const rEmail = document.getElementById('recover-email').value.trim();
+
+    // ดักไว้ก่อนว่ากรอกครบไหม
+    if (!rId || !rProof || !rEmail) {
+        showDialog({ icon:'⚠️', iconType:'warn', title:'ข้อมูลไม่ครบ', message:'กรุณากรอกข้อมูลให้ครบทั้ง 3 ช่องเพื่อความรวดเร็วในการตรวจสอบครับ', actions:[{label:'ตกลง',style:'primary',value:0}] });
+        return;
+    }
+
+    // เปิดจอโหลด
+    const loader = document.getElementById('fake-loader');
+    loader.style.display = 'flex'; loader.style.opacity = '1';
+
+    // เตรียมตัวแปรส่งไปที่ Email Template
+    const templateParams = {
+        user_id: rId,
+        user_proof: rProof,
+        reply_to: rEmail
+    };
+
+    try {
+        // ⚠️ อย่าลืมแก้ YOUR_SERVICE_ID กับ YOUR_TEMPLATE_ID นะครับ
+        await emailjs.send('service_nh0x2md', 'template_ggcntfp', templateParams);
+        
+        showDialog({ 
+            icon:'✅', iconType:'success', title:'ส่งคำร้องสำเร็จ', 
+            message:'แอดมินได้รับข้อมูลแล้ว จะรีบตรวจสอบและติดต่อกลับทางอีเมลที่คุณระบุไว้โดยเร็วที่สุดครับ', 
+            actions:[{label:'กลับหน้าแรก',style:'primary',value:0}] 
+        }).then(() => {
+            // ล้างข้อมูลช่องกรอกแล้วกลับหน้าแรก
+            document.getElementById('recover-id').value = '';
+            document.getElementById('recover-proof').value = '';
+            document.getElementById('recover-email').value = '';
+            goHome();
+        });
+
+    } catch (error) {
+        console.error('EmailJS Error:', error);
+        showDialog({ icon:'❌', iconType:'danger', title:'ส่งอีเมลไม่สำเร็จ', message:'ระบบส่งอีเมลมีปัญหาชั่วคราว กรุณาลองใหม่อีกครั้ง', actions:[{label:'ตกลง',style:'primary',value:0}] });
+    } finally {
+        loader.style.opacity = '0';
+        setTimeout(() => loader.style.display = 'none', 500);
+    }
+}
 
 /* ==============================================================
    CHAT CORE
@@ -1672,5 +1733,13 @@ async function deleteHistory(event, chatId, mode) {
     }
 }
 </script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script type="text/javascript">
+    (function(){
+        // เอา Public Key จากเมนู Account ในเว็บ EmailJS มาใส่ตรงนี้
+        emailjs.init("jL66h-HyDO-cscgep"); 
+    })();
+</script>
+
 </body>
 </html>
