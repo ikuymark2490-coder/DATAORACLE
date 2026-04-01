@@ -58,45 +58,61 @@
            LOADER
         ============================================================ */
         #fake-loader {
-            position: absolute; inset: 0;
+            position: absolute;
+            inset: 0;
             background: #fff;
             z-index: 9999;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 16px;
+            gap: 10px;
             transition: opacity .5s ease;
         }
+        /* FIX: Logo image in loader */
+        .loader-logo-img {
+            width: 88px;
+            height: 88px;
+            object-fit: contain;
+            animation: loaderLogoIn .7s cubic-bezier(.34, 1.56, .64, 1) both;
+            margin-bottom: 4px;
+        }
+        @keyframes loaderLogoIn {
+            from { opacity: 0; transform: scale(.55) translateY(12px); }
+            to   { opacity: 1; transform: scale(1)  translateY(0); }
+        }
         .loader-logo {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 600;
             letter-spacing: 4px;
             color: var(--text);
-            animation: fadeInDown .6s ease both;
+            animation: fadeInDown .6s .15s ease both;
         }
         .loader-dots {
-            display: flex; gap: 6px;
-            animation: fadeInUp .6s .2s ease both;
+            display: flex;
+            gap: 6px;
+            animation: fadeInUp .6s .3s ease both;
         }
         .loader-dots span {
-            width: 6px; height: 6px;
+            width: 6px;
+            height: 6px;
             background: var(--text);
             border-radius: 50%;
             animation: dotPulse 1.2s ease-in-out infinite;
         }
         .loader-dots span:nth-child(2) { animation-delay: .2s; }
         .loader-dots span:nth-child(3) { animation-delay: .4s; }
+
         @keyframes dotPulse {
-            0%,80%,100% { opacity: .2; transform: scale(.8); }
-            40%          { opacity: 1;  transform: scale(1); }
+            0%, 80%, 100% { opacity: .2; transform: scale(.8); }
+            40%            { opacity: 1;  transform: scale(1);  }
         }
-        @keyframes fadeInDown { from { opacity:0; transform:translateY(-12px); } to { opacity:1; transform:none; } }
-        @keyframes fadeInUp   { from { opacity:0; transform:translateY(12px);  } to { opacity:1; transform:none; } }
-        @keyframes fadeIn     { from { opacity:0; } to { opacity:1; } }
-        @keyframes slideUpIn  { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
-        @keyframes scaleIn    { from { opacity:0; transform:scale(.92); } to { opacity:1; transform:scale(1); } }
-        @keyframes shake      { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)} }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: none; } }
+        @keyframes fadeInUp   { from { opacity: 0; transform: translateY(12px);  } to { opacity: 1; transform: none; } }
+        @keyframes fadeIn     { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUpIn  { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+        @keyframes scaleIn    { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: scale(1); } }
+        @keyframes shake      { 0%,100% { transform: translateX(0); } 20%,60% { transform: translateX(-6px); } 40%,80% { transform: translateX(6px); } }
 
         /* ============================================================
            HEADER
@@ -112,27 +128,25 @@
             min-height: 56px;
         }
         .icon-btn {
-            background: none; border: none; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--text); padding: 8px; margin: -8px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            padding: 8px;
+            margin: -8px;
             border-radius: 10px;
             transition: background var(--transition);
         }
         .icon-btn:hover { background: var(--accent-soft); }
         .icon-btn svg { width: 22px; height: 22px; stroke-width: 1.6; }
         .header-title {
-            font-size: 15px; font-weight: 500; letter-spacing: .4px;
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: .4px;
             animation: fadeIn .3s ease;
-        }
-        .header-badge {
-            display: inline-block;
-            font-size: 9px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            padding: 2px 7px;
-            border-radius: 20px;
-            margin-left: 6px;
-            vertical-align: middle;
         }
         .badge-predict { background: #f3e8ff; color: var(--predict-hue); }
         .badge-normal  { background: #e0f2fe; color: var(--normal-hue); }
@@ -141,20 +155,28 @@
            SIDEBAR
         ============================================================ */
         .sidebar {
-            position: absolute; top: 0; left: -100%;
-            width: 80%; max-width: 300px; height: 100%;
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100%;
             background: var(--surface);
             border-right: 1px solid var(--border);
             z-index: 30;
             transition: left .3s cubic-bezier(.4,0,.2,1);
-            display: flex; flex-direction: column;
+            display: flex;
+            flex-direction: column;
             box-shadow: 4px 0 24px rgba(0,0,0,0);
         }
         .sidebar.open { left: 0; box-shadow: 4px 0 24px rgba(0,0,0,.12); }
         .sidebar-overlay {
-            position: absolute; inset: 0;
+            position: absolute;
+            inset: 0;
             background: rgba(0,0,0,.35);
-            z-index: 20; opacity: 0; pointer-events: none;
+            z-index: 20;
+            opacity: 0;
+            pointer-events: none;
             transition: opacity .3s ease;
             backdrop-filter: blur(2px);
         }
@@ -168,24 +190,39 @@
         .sidebar-content { flex-grow: 1; overflow-y: auto; padding: 16px 16px 8px; }
         .history-group { margin-bottom: 20px; }
         .history-group h3 {
-            font-size: 11px; color: var(--muted); margin-bottom: 8px;
-            text-transform: uppercase; letter-spacing: 1.2px; font-weight: 500;
+            font-size: 11px;
+            color: var(--muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 500;
             padding: 0 4px;
         }
         .history-item {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 12px; border-radius: 10px; cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
             transition: background var(--transition);
             margin-bottom: 2px;
         }
         .history-item:hover { background: var(--accent-soft); }
         .history-item span {
-            font-size: 13px; white-space: nowrap;
-            overflow: hidden; text-overflow: ellipsis; max-width: 78%;
+            font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 78%;
         }
         .delete-btn {
-            background: none; border: none; color: #ccc;
-            cursor: pointer; padding: 4px; border-radius: 6px;
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 6px;
             transition: color var(--transition), background var(--transition);
         }
         .delete-btn:hover { color: var(--danger); background: #fff0f0; }
@@ -193,21 +230,37 @@
         .sidebar-footer {
             padding: 14px 16px;
             border-top: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: space-between;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         .profile-btn {
-            display: flex; align-items: center; gap: 10px;
-            cursor: pointer; background: none; border: none; text-align: left;
-            border-radius: 10px; padding: 6px 8px; margin: -6px -8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            text-align: left;
+            border-radius: 10px;
+            padding: 6px 8px;
+            margin: -6px -8px;
             transition: background var(--transition);
         }
         .profile-btn:hover { background: var(--accent-soft); }
         .avatar {
-            width: 34px; height: 34px; border-radius: 50%;
-            background: #f0f0f0; display: flex;
-            align-items: center; justify-content: center;
-            font-weight: 600; font-size: 14px; color: #888;
-            border: 1px solid var(--border); flex-shrink: 0;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: #888;
+            border: 1px solid var(--border);
+            flex-shrink: 0;
             transition: transform .2s;
         }
         .profile-btn:hover .avatar { transform: scale(1.05); }
@@ -218,8 +271,10 @@
            VIEWS
         ============================================================ */
         .view {
-            display: none; flex-direction: column;
-            flex-grow: 1; overflow-y: auto;
+            display: none;
+            flex-direction: column;
+            flex-grow: 1;
+            overflow-y: auto;
             background: var(--surface);
             animation: fadeIn .25s ease;
         }
@@ -228,26 +283,49 @@
         /* ---- HOME ---- */
         .home-content {
             padding: 40px 24px 32px;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            height: 100%; gap: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            gap: 0;
+        }
+        .home-main-icon {
+            width: 140px;
+            height: 140px;
+            object-fit: contain;
+            margin-bottom: 20px;
+            animation: slideUpIn .5s ease both;
+        }
+        @media (max-height: 600px) {
+            .home-main-icon { width: 60px; height: 60px; margin-bottom: 10px; }
         }
         .home-logo {
-            font-size: 34px; font-weight: 600;
-            letter-spacing: -1px; margin-bottom: 8px;
+            font-size: 34px;
+            font-weight: 600;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
             animation: slideUpIn .5s ease both;
         }
         .home-tagline {
-            font-size: 13px; color: var(--muted);
-            margin-bottom: 44px; text-align: center; line-height: 1.6;
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 44px;
+            text-align: center;
+            line-height: 1.6;
             animation: slideUpIn .5s .08s ease both;
         }
         .home-cards { width: 100%; max-width: 320px; display: flex; flex-direction: column; gap: 12px; }
         .home-card {
-            width: 100%; padding: 20px 22px;
-            border: 1px solid var(--border); border-radius: var(--radius-card);
-            cursor: pointer; background: var(--surface);
-            display: flex; align-items: center; gap: 14px;
+            width: 100%;
+            padding: 20px 22px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-card);
+            cursor: pointer;
+            background: var(--surface);
+            display: flex;
+            align-items: center;
+            gap: 14px;
             transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
             animation: slideUpIn .5s ease both;
         }
@@ -256,9 +334,13 @@
         .home-card:hover { border-color: var(--text); box-shadow: var(--shadow-sm); transform: translateY(-2px); }
         .home-card:active { transform: translateY(0); }
         .card-icon {
-            width: 42px; height: 42px; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0; font-size: 20px;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
         .card-icon.normal  { background: #e0f2fe; }
         .card-icon.predict { background: #f3e8ff; }
@@ -271,20 +353,34 @@
 
         /* ---- FORMS ---- */
         .form-content {
-            padding: 40px 24px; max-width: 420px;
-            margin: 0 auto; width: 100%;
+            padding: 40px 24px;
+            max-width: 420px;
+            margin: 0 auto;
+            width: 100%;
         }
         .form-content h2 { font-size: 20px; margin-bottom: 6px; font-weight: 600; }
         .form-subtitle { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.5; }
         .form-group { margin-bottom: 22px; }
-        .form-group label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 8px; font-weight: 500; letter-spacing: .3px; }
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 8px;
+            font-weight: 500;
+            letter-spacing: .3px;
+        }
         .form-group input,
         .form-group select,
         .form-group textarea {
-            width: 100%; padding: 12px 0;
-            border: none; border-bottom: 1.5px solid var(--border);
-            font-size: 15px; font-family: 'Prompt', sans-serif;
-            outline: none; background: transparent; color: var(--text);
+            width: 100%;
+            padding: 12px 0;
+            border: none;
+            border-bottom: 1.5px solid var(--border);
+            font-size: 15px;
+            font-family: 'Prompt', sans-serif;
+            outline: none;
+            background: transparent;
+            color: var(--text);
             transition: border-color var(--transition);
         }
         .form-group input:focus,
@@ -292,35 +388,60 @@
         .form-group textarea:focus { border-bottom-color: var(--text); }
         .form-group textarea { resize: none; }
         .checkbox-group {
-            display: flex; align-items: center; gap: 10px;
-            font-size: 13px; color: var(--muted); cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--muted);
+            cursor: pointer;
             padding: 4px 0;
         }
         .checkbox-group input { width: auto; padding: 0; }
         .btn-submit {
-            width: 100%; padding: 15px;
-            background: var(--text); color: #fff;
-            border: none; border-radius: var(--radius-btn);
-            font-size: 14px; font-weight: 500; font-family: 'Prompt', sans-serif;
-            cursor: pointer; margin-top: 8px;
+            width: 100%;
+            padding: 15px;
+            background: var(--text);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-btn);
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'Prompt', sans-serif;
+            cursor: pointer;
+            margin-top: 8px;
             transition: opacity var(--transition), transform var(--transition);
         }
-        .btn-submit:hover { opacity: .88; }
+        .btn-submit:hover  { opacity: .88; }
         .btn-submit:active { transform: scale(.98); }
         .btn-outline {
-            width: 100%; padding: 15px;
-            background: var(--surface); color: var(--text);
-            border: 1.5px solid var(--border); border-radius: var(--radius-btn);
-            font-size: 14px; font-weight: 500; font-family: 'Prompt', sans-serif;
-            cursor: pointer; margin-top: 10px; display: flex; align-items: center; gap: 10px;
+            width: 100%;
+            padding: 15px;
+            background: var(--surface);
+            color: var(--text);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-btn);
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'Prompt', sans-serif;
+            cursor: pointer;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             justify-content: center;
             transition: border-color var(--transition), background var(--transition);
         }
         .btn-outline:hover { border-color: var(--text); background: var(--accent-soft); }
         .btn-text {
-            background: none; border: none; color: var(--muted);
-            font-size: 13px; margin-top: 18px; cursor: pointer;
-            text-decoration: underline; width: 100%; text-align: center;
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-size: 13px;
+            margin-top: 18px;
+            cursor: pointer;
+            text-decoration: underline;
+            width: 100%;
+            text-align: center;
             font-family: 'Prompt', sans-serif;
             transition: color var(--transition);
         }
@@ -328,40 +449,57 @@
 
         /* ---- CHAT ---- */
         .chat-view-wrapper {
-            display: flex; flex-direction: column;
-            flex-grow: 1; overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            overflow: hidden;
             position: relative;
         }
         .chat-box {
-            flex-grow: 1; padding: 20px 18px;
+            flex-grow: 1;
+            padding: 20px 18px;
             overflow-y: auto;
-            display: flex; flex-direction: column;
+            display: flex;
+            flex-direction: column;
             gap: 20px;
         }
 
-        /* --- Chat Empty State (greeting + shortcuts) --- */
+        /* --- Chat Empty State --- */
         .chat-empty-state {
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            flex-grow: 1; text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            text-align: center;
             padding: 32px 20px;
             animation: fadeIn .4s ease;
         }
         .chat-empty-icon {
-            width: 54px; height: 54px; border-radius: 16px;
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 16px; font-size: 26px;
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 26px;
             animation: scaleIn .4s .1s ease both;
         }
         .chat-empty-icon.predict { background: #f3e8ff; }
         .chat-empty-icon.normal  { background: #e0f2fe; }
         .chat-empty-greeting {
-            font-size: 18px; font-weight: 600; margin-bottom: 6px;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 6px;
             animation: slideUpIn .4s .15s ease both;
         }
         .chat-empty-sub {
-            font-size: 13px; color: var(--muted); line-height: 1.6;
-            max-width: 260px; margin-bottom: 28px;
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.6;
+            max-width: 260px;
+            margin-bottom: 28px;
             animation: slideUpIn .4s .2s ease both;
         }
         .shortcuts-grid {
@@ -410,23 +548,27 @@
             border: 1px solid var(--border);
         }
         .bot-label {
-            font-size: 11px; font-weight: 600;
-            margin-bottom: 5px; color: var(--muted);
-            letter-spacing: .5px; text-transform: uppercase;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--muted);
+            letter-spacing: .5px;
+            text-transform: uppercase;
         }
-        .bot-bubble {
-            background: #fff;
-            padding: 0;
-        }
+        .bot-bubble { background: #fff; padding: 0; }
 
         /* --- Typing Indicator --- */
         .typing-indicator {
-            display: flex; gap: 5px; align-items: center;
+            display: flex;
+            gap: 5px;
+            align-items: center;
             padding: 12px 0;
         }
         .typing-indicator span {
-            width: 7px; height: 7px;
-            background: #ccc; border-radius: 50%;
+            width: 7px;
+            height: 7px;
+            background: #ccc;
+            border-radius: 50%;
             animation: dotPulse 1.2s ease-in-out infinite;
         }
         .typing-indicator span:nth-child(2) { animation-delay: .18s; }
@@ -439,7 +581,8 @@
             background: var(--surface);
         }
         .input-wrapper {
-            display: flex; gap: 10px;
+            display: flex;
+            gap: 10px;
             background: var(--accent-soft);
             padding: 10px 16px;
             border-radius: 20px;
@@ -452,59 +595,92 @@
             box-shadow: 0 0 0 3px rgba(0,0,0,.04);
         }
         .input-wrapper input {
-            flex-grow: 1; border: none; background: transparent;
-            font-size: 14px; font-family: 'Prompt', sans-serif;
-            outline: none; color: var(--text);
+            flex-grow: 1;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            font-family: 'Prompt', sans-serif;
+            outline: none;
+            color: var(--text);
         }
         .input-wrapper input::placeholder { color: #bbb; }
         .send-btn {
-            background: var(--text); border: none; cursor: pointer;
-            color: #fff; display: flex; align-items: center; justify-content: center;
-            width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+            background: var(--text);
+            border: none;
+            cursor: pointer;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            flex-shrink: 0;
             transition: opacity var(--transition), transform var(--transition);
         }
-        .send-btn:hover { opacity: .85; }
+        .send-btn:hover  { opacity: .85; }
         .send-btn:active { transform: scale(.9); }
         .send-btn svg { width: 16px; height: 16px; stroke-width: 2; }
         .disclaimer {
-            font-size: 10.5px; color: #bbb;
-            text-align: center; margin-top: 7px; letter-spacing: .2px;
+            font-size: 10.5px;
+            color: #bbb;
+            text-align: center;
+            margin-top: 7px;
+            letter-spacing: .2px;
         }
 
         /* ============================================================
            SETTINGS CHOICE MODAL
         ============================================================ */
         .modal-overlay {
-            position: absolute; inset: 0;
+            position: absolute;
+            inset: 0;
             background: rgba(0,0,0,.45);
-            z-index: 50; display: none;
-            align-items: flex-end; justify-content: center;
+            z-index: 50;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
             backdrop-filter: blur(3px);
         }
         .modal-overlay.open { display: flex; }
         .modal-sheet {
-            width: 100%; background: var(--surface);
-            border-radius: 22px 22px 0 0; padding: 8px 16px 28px;
+            width: 100%;
+            background: var(--surface);
+            border-radius: 22px 22px 0 0;
+            padding: 8px 16px 28px;
             animation: slideUpSheet .3s cubic-bezier(.4,0,.2,1);
         }
-        @keyframes slideUpSheet { from{transform:translateY(100%)} to{transform:none} }
+        @keyframes slideUpSheet { from { transform: translateY(100%); } to { transform: none; } }
         .sheet-handle {
-            width: 36px; height: 4px; background: #e0e0e0;
-            border-radius: 2px; margin: 10px auto 18px;
+            width: 36px;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            margin: 10px auto 18px;
         }
         .modal-title {
-            font-size: 16px; font-weight: 600; margin-bottom: 16px;
-            display: flex; justify-content: space-between; align-items: center;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 0 4px;
         }
         .choice-item {
-            width: 100%; padding: 14px 12px;
-            border: none; background: none;
-            text-align: left; font-size: 14px;
+            width: 100%;
+            padding: 14px 12px;
+            border: none;
+            background: none;
+            text-align: left;
+            font-size: 14px;
             font-family: 'Prompt', sans-serif;
-            cursor: pointer; display: flex;
-            align-items: center; gap: 12px;
-            border-radius: 12px; color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-radius: 12px;
+            color: var(--text);
             transition: background var(--transition);
         }
         .choice-item:hover { background: var(--accent-soft); }
@@ -514,28 +690,49 @@
            FULL-SCREEN SETTINGS VIEWS
         ============================================================ */
         .full-view {
-            display: none; position: absolute; inset: 0;
-            background: var(--surface); z-index: 100;
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: var(--surface);
+            z-index: 100;
             flex-direction: column;
             animation: slideUpIn .3s ease;
         }
         .full-view.active { display: flex; }
         .full-header {
-            display: flex; justify-content: space-between;
-            align-items: center; padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
             border-bottom: 1px solid var(--border);
         }
         .full-header .page-title { font-weight: 600; font-size: 15px; }
-        .full-content { padding: 20px 20px; flex-grow: 1; overflow-y: auto; }
+        .full-content { padding: 20px; flex-grow: 1; overflow-y: auto; }
 
         /* Tabs */
-        .tab-header { display: flex; border-bottom: 1.5px solid var(--border); margin-bottom: 24px; }
+        .tab-header {
+            display: flex;
+            border-bottom: 1.5px solid var(--border);
+            margin-bottom: 24px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .tab-header::-webkit-scrollbar { display: none; }
         .tab-btn {
-            flex: 1; padding: 11px; border: none; background: none;
-            font-size: 13.5px; font-family: 'Prompt', sans-serif;
-            color: var(--muted); cursor: pointer;
-            border-bottom: 2px solid transparent; margin-bottom: -1.5px;
+            flex: 1 0 auto;
+            min-width: max-content;
+            padding: 11px 16px;
+            border: none;
+            background: none;
+            font-size: 13.5px;
+            font-family: 'Prompt', sans-serif;
+            color: var(--muted);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1.5px;
             transition: color var(--transition), border-color var(--transition);
+            white-space: nowrap;
         }
         .tab-btn.active { color: var(--text); border-bottom-color: var(--text); font-weight: 500; }
         .tab-pane { display: none; }
@@ -543,62 +740,91 @@
 
         /* Quota Card */
         .quota-card {
-            margin-bottom: 16px; padding: 16px;
-            border: 1.5px solid var(--border); border-radius: 14px;
+            margin-bottom: 16px;
+            padding: 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
             transition: border-color var(--transition);
         }
         .quota-card:hover { border-color: #ccc; }
         .quota-info { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 12.5px; }
         .quota-info b { font-weight: 500; }
         .progress-container {
-            width: 100%; height: 6px; background: #f0f0f0;
-            border-radius: 3px; overflow: hidden; margin-bottom: 10px;
+            width: 100%;
+            height: 6px;
+            background: #f0f0f0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 10px;
         }
         .progress-bar { height: 100%; background: var(--text); border-radius: 3px; transition: width .4s ease; }
         .model-desc { font-size: 11.5px; color: var(--muted); line-height: 1.55; }
         .reset-timer {
-            text-align: center; color: var(--predict-hue);
-            font-weight: 600; padding: 14px; font-size: 14px;
-            background: #f5f3ff; border-radius: 12px; margin-top: 16px;
+            text-align: center;
+            color: var(--predict-hue);
+            font-weight: 600;
+            padding: 14px;
+            font-size: 14px;
+            background: #f5f3ff;
+            border-radius: 12px;
+            margin-top: 16px;
         }
 
         /* ============================================================
-           INFO MODAL (Predict Info Sheet)
+           INFO MODAL (Bottom Sheet)
         ============================================================ */
-        #predict-info-modal { align-items: flex-end; }
+        #predict-info-modal,
+        #normal-info-modal,
+        #home-info-modal { align-items: flex-end; }
         .info-sheet { width: 100%; max-height: 82vh; overflow-y: auto; }
         .ai-engine-badge {
-            display: flex; align-items: center; gap: 8px;
-            background: #f0f7ff; padding: 10px 12px;
-            border-radius: 10px; border: 1px solid #e0eefb;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f0f7ff;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid #e0eefb;
             margin-bottom: 16px;
         }
         .ai-tag {
-            background: var(--text); color: #fff;
-            font-size: 9px; font-weight: 700; letter-spacing: 1px;
-            padding: 3px 7px; border-radius: 4px;
+            background: var(--text);
+            color: #fff;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 3px 7px;
+            border-radius: 4px;
         }
         .ai-model-name { font-size: 13px; font-weight: 500; }
         .info-section { margin-bottom: 16px; }
         .info-section strong { font-size: 13px; display: block; margin-bottom: 4px; }
-        .info-section p  { font-size: 12.5px; color: #555; line-height: 1.6; }
+        .info-section p { font-size: 12.5px; color: #555; line-height: 1.6; }
         .info-quote {
-            font-size: 12px; color: #999; font-style: italic;
-            border-left: 2px solid var(--border); padding-left: 12px;
-            margin-top: 14px; line-height: 1.6;
+            font-size: 12px;
+            color: #999;
+            font-style: italic;
+            border-left: 2px solid var(--border);
+            padding-left: 12px;
+            margin-top: 14px;
+            line-height: 1.6;
         }
 
         /* ============================================================
-           CUSTOM DIALOG (replaces alert / confirm)
+           CUSTOM DIALOG
         ============================================================ */
         #custom-dialog-overlay {
-            position: absolute; inset: 0;
+            position: absolute;
+            inset: 0;
             background: rgba(0,0,0,.5);
             z-index: 200;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 24px;
             backdrop-filter: blur(4px);
-            opacity: 0; pointer-events: none;
+            opacity: 0;
+            pointer-events: none;
             transition: opacity .2s ease;
         }
         #custom-dialog-overlay.open { opacity: 1; pointer-events: auto; }
@@ -606,41 +832,44 @@
             background: var(--surface);
             border-radius: 22px;
             padding: 28px 24px 20px;
-            width: 100%; max-width: 320px;
+            width: 100%;
+            max-width: 320px;
             box-shadow: 0 24px 60px rgba(0,0,0,.18);
             transform: scale(.92) translateY(8px);
             transition: transform .25s cubic-bezier(.34,1.56,.64,1);
         }
         #custom-dialog-overlay.open .dialog-card { transform: scale(1) translateY(0); }
         .dialog-icon {
-            width: 48px; height: 48px; border-radius: 14px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 22px; margin: 0 auto 16px;
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin: 0 auto 16px;
         }
         .dialog-icon.warn    { background: #fff7ed; }
         .dialog-icon.danger  { background: #fff0f0; }
         .dialog-icon.success { background: #f0fdf4; }
         .dialog-icon.info    { background: #f0f7ff; }
-        .dialog-title {
-            font-size: 16px; font-weight: 600;
-            text-align: center; margin-bottom: 8px;
-        }
-        .dialog-message {
-            font-size: 13.5px; color: #555;
-            text-align: center; line-height: 1.6; margin-bottom: 22px;
-        }
+        .dialog-title { font-size: 16px; font-weight: 600; text-align: center; margin-bottom: 8px; }
+        .dialog-message { font-size: 13.5px; color: #555; text-align: center; line-height: 1.6; margin-bottom: 22px; }
         .dialog-actions { display: flex; gap: 8px; }
         .dialog-btn {
-            flex: 1; padding: 13px;
-            border-radius: 12px; border: none;
-            font-size: 13.5px; font-weight: 500;
+            flex: 1;
+            padding: 13px;
+            border-radius: 12px;
+            border: none;
+            font-size: 13.5px;
+            font-weight: 500;
             font-family: 'Prompt', sans-serif;
             cursor: pointer;
             transition: opacity var(--transition), transform var(--transition);
         }
         .dialog-btn:active { transform: scale(.97); }
-        .dialog-btn.primary { background: var(--text); color: #fff; }
-        .dialog-btn.secondary { background: var(--accent-soft); color: var(--text); border: 1.5px solid var(--border); }
+        .dialog-btn.primary    { background: var(--text); color: #fff; }
+        .dialog-btn.secondary  { background: var(--accent-soft); color: var(--text); border: 1.5px solid var(--border); }
         .dialog-btn.danger-btn { background: var(--danger); color: #fff; }
         .dialog-btn:hover { opacity: .88; }
 
@@ -648,17 +877,28 @@
            TOAST NOTIFICATION
         ============================================================ */
         #toast-container {
-            position: absolute; top: 70px; left: 50%;
+            position: absolute;
+            top: 70px;
+            left: 50%;
             transform: translateX(-50%);
-            z-index: 300; display: flex; flex-direction: column;
-            gap: 8px; width: calc(100% - 48px); max-width: 360px;
+            z-index: 300;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: calc(100% - 48px);
+            max-width: 360px;
             pointer-events: none;
         }
         .toast {
-            background: #111; color: #fff;
-            padding: 12px 16px; border-radius: 12px;
-            font-size: 13px; font-weight: 400; line-height: 1.4;
-            display: flex; align-items: center; gap: 10px;
+            background: #111;
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             box-shadow: 0 8px 24px rgba(0,0,0,.18);
             animation: toastIn .3s cubic-bezier(.34,1.56,.64,1) both;
             pointer-events: auto;
@@ -667,17 +907,78 @@
         .toast.error   { background: #991b1b; }
         .toast.warn    { background: #92400e; }
         .toast-out { animation: toastOut .25s ease both; }
-        @keyframes toastIn  { from{opacity:0;transform:translateY(-14px) scale(.95)} to{opacity:1;transform:none} }
-        @keyframes toastOut { from{opacity:1;transform:none} to{opacity:0;transform:translateY(-8px) scale(.95)} }
+        @keyframes toastIn  { from { opacity: 0; transform: translateY(-14px) scale(.95); } to { opacity: 1; transform: none; } }
+        @keyframes toastOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-8px) scale(.95); } }
+
+        /* ============================================================
+           ABOUT / INFO PAGE STYLES
+        ============================================================ */
+        .about-banner {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 12px;
+            display: block;
+            margin: 0 auto;
+            animation: fadeIn .5s ease both;
+        }
+        .vision-card {
+            margin-top: 20px;
+            background: #ffffff;
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .vision-card:hover { border-color: var(--predict-hue); box-shadow: var(--shadow-sm); }
+        .vision-header {
+            background: var(--accent-soft);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            border-bottom: 1px solid var(--border);
+        }
+        .vision-icon { width: 18px; height: 18px; color: var(--predict-hue); }
+        .vision-body { padding: 18px 16px; font-size: 13.5px; line-height: 1.7; color: #444; }
+        .vision-body strong { color: var(--text); display: block; margin-bottom: 8px; font-size: 14.5px; }
+        .vision-footer { padding: 0 16px 18px; }
+        .vision-highlight {
+            background: #fcfaff;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .vision-highlight span { font-size: 12px; font-weight: 600; color: var(--predict-hue); display: block; margin-bottom: 6px; }
+        .vision-highlight ul { padding-left: 18px; margin: 0; }
+        .vision-highlight li { font-size: 12px; color: #666; margin-bottom: 4px; }
+        .vision-quote {
+            text-align: center;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text);
+            padding: 10px;
+            border-top: 1px dashed var(--border);
+        }
     </style>
 </head>
 <body>
 <div class="app-container">
 
     <!-- ==================== LOADER ==================== -->
+    <!-- FIX: Added icon_logo.png with smooth scale-in animation -->
     <div id="fake-loader">
+        <img src="logo/icon_logo.png" alt="DataOracle Logo" class="loader-logo-img">
         <div class="loader-logo">DATAORACLE</div>
-        <div class="loader-dots"><span></span><span></span><span></span></div>
+        <div class="loader-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </div>
 
     <!-- ==================== TOAST ==================== -->
@@ -690,17 +991,37 @@
         <div class="sidebar-content">
             <div class="history-group">
                 <h3>คุยเล่น</h3>
-                <div id="history-normal-list"><p style="font-size:12px;color:#ccc;padding:8px 4px;">ยังไม่มีประวัติ</p></div>
+                <div id="history-normal-list">
+                    <p style="font-size:12px;color:#ccc;padding:8px 4px;">ยังไม่มีประวัติ</p>
+                </div>
             </div>
             <div class="history-group">
                 <h3>ทำนาย</h3>
-                <div id="history-predict-list"><p style="font-size:12px;color:#ccc;padding:8px 4px;">ยังไม่มีประวัติ</p></div>
+                <div id="history-predict-list">
+                    <p style="font-size:12px;color:#ccc;padding:8px 4px;">ยังไม่มีประวัติ</p>
+                </div>
+            </div>
+            <div class="history-group" style="margin-top:32px; border-top:1px solid var(--border); padding-top:20px;">
+                <h3>ข้อมูลระบบ</h3>
+                <div class="history-item" onclick="openFullInfo('about')">
+                    <span style="display:flex; align-items:center; gap:10px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:16px;height:16px;stroke-width:1.4" stroke-linecap="round">
+                            <circle cx="12" cy="12" r="9.5"/>
+                            <line x1="12" y1="16" x2="12" y2="11.5"/>
+                            <circle cx="12" cy="8" r=".6" fill="currentColor"/>
+                        </svg>
+                        ข้อมูล DataOracle
+                    </span>
+                </div>
             </div>
         </div>
         <div class="sidebar-footer">
             <button class="profile-btn" onclick="handleProfileClick()">
                 <div class="avatar" id="sidebar-avatar">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:15px;height:15px;stroke-width:1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:15px;height:15px;stroke-width:1.8">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
                 </div>
                 <div>
                     <div class="profile-name"  id="sidebar-name">เข้าสู่ระบบ / สมัคร</div>
@@ -708,7 +1029,10 @@
                 </div>
             </button>
             <button class="icon-btn" onclick="openSettings()" id="btn-settings" style="display:none;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/>
+                </svg>
             </button>
         </div>
     </div>
@@ -718,11 +1042,17 @@
         <div class="modal-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
             <button class="choice-item" onclick="openFullSettings('profile')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
                 แก้ไขโปรไฟล์
             </button>
             <button class="choice-item" onclick="openFullSettings('quota')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v10l4.5 4.5"/><circle cx="12" cy="12" r="10"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 2v10l4.5 4.5"/>
+                    <circle cx="12" cy="12" r="10"/>
+                </svg>
                 พลังงาน & โควต้า
             </button>
         </div>
@@ -732,30 +1062,55 @@
     <div id="view-full-profile" class="full-view">
         <div class="full-header">
             <button class="icon-btn" onclick="closeFullSettings()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5m7-7-7 7 7 7"/>
+                </svg>
             </button>
             <span class="page-title">โปรไฟล์</span>
             <div style="width:38px"></div>
         </div>
         <div class="full-content">
+            <!-- FIX: Scoped switchTab to profile container with data-scope -->
             <div class="tab-header">
-                <button class="tab-btn active" onclick="switchTab('basic',event)">ข้อมูลทั่วไป</button>
-                <button class="tab-btn" onclick="switchTab('birth',event)">ข้อมูลดวงชะตา</button>
+                <button class="tab-btn active" onclick="switchTab('basic', event, 'profile')">ข้อมูลทั่วไป</button>
+                <button class="tab-btn"        onclick="switchTab('birth', event, 'profile')">ข้อมูลดวงชะตา</button>
             </div>
             <div id="tab-basic" class="tab-pane active">
-                <div class="form-group"><label>ชื่อ ID (เปลี่ยนไม่ได้)</label><input type="text" id="set-id" readonly style="background:#f9f9f9;color:#aaa;cursor:not-allowed;"></div>
-                <div class="form-group"><label>ชื่อเล่น</label><input type="text" id="set-nick" placeholder="ชื่อที่แสดงในระบบ"></div>
+                <div class="form-group">
+                    <label>ชื่อ ID (เปลี่ยนไม่ได้)</label>
+                    <input type="text" id="set-id" readonly style="background:#f9f9f9;color:#aaa;cursor:not-allowed;">
+                </div>
+                <div class="form-group">
+                    <label>ชื่อเล่น</label>
+                    <input type="text" id="set-nick" placeholder="ชื่อที่แสดงในระบบ">
+                </div>
                 <button class="btn-submit" onclick="saveFullSettings()">บันทึกข้อมูลส่วนตัว</button>
             </div>
             <div id="tab-birth" class="tab-pane">
-                <div class="form-group"><label>ชื่อจริง</label><input type="text" id="set-realname" placeholder="สำหรับทำนายเท่านั้น"></div>
-                <div class="form-group"><label>วันเกิด</label><input type="text" id="set-birthdate" placeholder="เช่น 12 ม.ค. 2540"></div>
-                <div class="form-group"><label>เวลาเกิด</label><input type="text" id="set-birthtime" placeholder="เช่น 08:30 น. (ปล่อยว่างได้)"></div>
-                <div class="form-group"><label>ราศี</label><input type="text" id="set-zodiac" placeholder="เช่น มีน, กรกฎ"></div>
+                <div class="form-group">
+                    <label>ชื่อจริง</label>
+                    <input type="text" id="set-realname" placeholder="สำหรับทำนายเท่านั้น">
+                </div>
+                <div class="form-group">
+                    <label>วันเกิด</label>
+                    <input type="text" id="set-birthdate" placeholder="เช่น 12 ม.ค. 2540">
+                </div>
+                <div class="form-group">
+                    <label>เวลาเกิด</label>
+                    <input type="text" id="set-birthtime" placeholder="เช่น 08:30 น. (ปล่อยว่างได้)">
+                </div>
+                <div class="form-group">
+                    <label>ราศี</label>
+                    <input type="text" id="set-zodiac" placeholder="เช่น มีน, กรกฎ">
+                </div>
                 <button class="btn-submit" onclick="saveFullSettings()">บันทึกข้อมูลดวง</button>
             </div>
             <button class="btn-outline" onclick="logout()" style="margin-top:32px;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:16px;height:16px;stroke-width:2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:16px;height:16px;stroke-width:2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16 17 21 12 16 7"/>
+                    <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
                 ออกจากระบบ
             </button>
             <button class="btn-text" onclick="deleteAccount()" style="color:var(--danger);">ลบบัญชีผู้ใช้ถาวร</button>
@@ -766,19 +1121,25 @@
     <div id="view-full-quota" class="full-view">
         <div class="full-header">
             <button class="icon-btn" onclick="closeFullSettings()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5m7-7-7 7 7 7"/>
+                </svg>
             </button>
             <span class="page-title">พลังงานคงเหลือ</span>
             <div style="width:38px"></div>
         </div>
         <div class="full-content">
-            <p style="font-size:12.5px;color:var(--muted);margin-bottom:18px;line-height:1.6;">เพื่อรักษาคุณภาพการประมวลผลและการเข้าถึงโมเดล AI ระดับสูง ระบบจึงมีการจำกัดโควต้าการใช้งานต่อวัน</p>
+            <p style="font-size:12.5px;color:var(--muted);margin-bottom:18px;line-height:1.6;">
+                เพื่อรักษาคุณภาพการประมวลผลและการเข้าถึงโมเดล AI ระดับสูง ระบบจึงมีการจำกัดโควต้าการใช้งานต่อวัน
+            </p>
             <div class="quota-card">
                 <div class="quota-info">
                     <b>Llama 3.3 70B — ห้องทำนาย</b>
                     <span id="quota-predict-label">0/10</span>
                 </div>
-                <div class="progress-container"><div id="bar-predict" class="progress-bar" style="width:0%"></div></div>
+                <div class="progress-container">
+                    <div id="bar-predict" class="progress-bar" style="width:0%"></div>
+                </div>
                 <p class="model-desc">วิเคราะห์เชิงลึก ตีความดวงชะตาซับซ้อน ประมวลผลเหตุและผลระดับสูง เหมาะกับการตัดสินใจสำคัญ</p>
             </div>
             <div class="quota-card">
@@ -786,31 +1147,241 @@
                     <b>Llama 3.1 8B — ห้องคุยเล่น</b>
                     <span id="quota-normal-label">0/40</span>
                 </div>
-                <div class="progress-container"><div id="bar-normal" class="progress-bar" style="width:0%"></div></div>
+                <div class="progress-container">
+                    <div id="bar-normal" class="progress-bar" style="width:0%"></div>
+                </div>
                 <p class="model-desc">ตอบสนองรวดเร็ว สนทนาทั่วไป ยืดหยุ่นสูงและประหยัดพลังงาน เหมาะสำหรับหาความรู้ทั่วไป</p>
             </div>
             <div class="reset-timer">รีเซ็ตในอีก <span id="countdown-timer">00:00:00</span></div>
         </div>
     </div>
 
+    <!-- ==================== FULL INFO VIEW ==================== -->
+    <!-- FIX: Moved inside app-container so position:absolute works correctly -->
+    <div id="view-full-info" class="full-view">
+        <div class="full-header">
+            <button class="icon-btn" onclick="closeFullSettings()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5m7-7-7 7 7 7"/>
+                </svg>
+            </button>
+            <span class="page-title">ข้อมูลระบบ</span>
+            <div style="width:38px"></div>
+        </div>
+        <div class="full-content" style="padding:24px;">
+            <div class="tab-header" style="margin-bottom:20px;">
+                <button class="tab-btn active" id="btn-info-about"   onclick="switchInfoTab('about')">เกี่ยวกับเรา</button>
+                <button class="tab-btn"         id="btn-info-rules"   onclick="switchInfoTab('rules')">นโยบาย</button>
+                <button class="tab-btn"         id="btn-info-contact" onclick="switchInfoTab('contact')">ติดต่อ</button>
+                <button class="tab-btn"         id="btn-info-creator" onclick="switchInfoTab('creator')">ผู้พัฒนา</button>
+            </div>
+
+            <!-- TAB: เกี่ยวกับเรา -->
+            <div id="tab-info-about" class="tab-pane active" style="font-size:13.5px;line-height:1.7;color:#444;">
+                <div style="text-align:center;margin-bottom:20px;">
+                    <img src="logo/banner.png" alt="DataOracle Banner" class="about-banner">
+                    <div style="font-size:12px;color:var(--muted);margin-top:4px;">Version 1.0.4 | Personal AI Project</div>
+                </div>
+                <h4 style="color:var(--text);font-size:15px;margin-bottom:8px;">ที่มาของโปรเจกต์</h4>
+                <p style="margin-bottom:16px;">
+                    DataOracle เริ่มต้นจากโปรเจกต์ส่วนตัวที่เกิดจากความเบื่อหน่ายในข้อจำกัดของ AI ทั่วไปที่มักจะปฏิเสธการตอบคำถามบ่อยครั้งเกินความจำเป็น เราจึงพยายามปรับจูนแนวทางการตอบสนอง (Prompt Logic) ให้มีความยืดหยุ่นและเป็นกันเองมากขึ้น เพื่อให้ AI เป็นพื้นที่ที่ผู้ใช้สามารถพูดคุยและตั้งคำถามได้อย่างสบายใจ
+                </p>
+                <h4 style="color:var(--text);font-size:15px;margin-bottom:8px;">แนวคิดหลัก</h4>
+                <p style="margin-bottom:16px;">
+                    เราเชื่อว่า AI ไม่ควรถูกกักขังอยู่ในกฎเกณฑ์ที่ซับซ้อนจนเสียอรรถรสในการสนทนา เป้าหมายของเราคือการสร้าง <b>"สะพานเชื่อมระหว่างข้อมูลและความเป็นอิสระ"</b> โดยใช้ขุมพลังจาก Llama 3 มาเป็นแกนกลาง และปรับแต่งวิธีการสื่อสารให้ตรงไปตรงมาที่สุดเท่าที่ระบบจะเอื้ออำนวย
+                </p>
+                <div style="background:#f9f9f9;border-left:3px solid var(--text);padding:12px 16px;margin:20px 0;">
+                    <i style="color:#666;">"เป้าหมายของเราเรียบง่าย คือการสร้างพื้นที่สนทนาที่มีคุณภาพและเป็นอิสระ สำหรับผู้ใช้ที่ต้องการคำตอบที่จริงใจในทุกวัน"</i>
+                </div>
+            </div>
+
+            <!-- TAB: นโยบาย -->
+            <div id="tab-info-rules" class="tab-pane" style="font-size:13.5px;line-height:1.7;color:#444;">
+                <h3 style="color:var(--text);font-size:15px;margin-bottom:12px;">ข้อตกลงการใช้งาน</h3>
+                <ul style="padding-left:18px;margin-bottom:24px;color:#555;">
+                    <li style="margin-bottom:10px;"><b>ความยืดหยุ่น:</b> เราพยายามลดการเซ็นเซอร์ที่ไม่จำเป็น เพื่อให้การสนทนาลื่นไหลและเป็นธรรมชาติที่สุด</li>
+                    <li style="margin-bottom:10px;"><b>ข้อจำกัดทางเทคนิค:</b> เนื่องจากระบบทำงานบนพื้นฐานของโมเดล Llama 3 คำตอบบางอย่างอาจยังคงมีเลเยอร์ความปลอดภัยจากต้นทางฝังอยู่ ซึ่งเป็นสิ่งที่เราเคารพเพื่อความมั่นคงของระบบโดยรวม</li>
+                    <li style="margin-bottom:10px;"><b>ความรับผิดชอบ:</b> ข้อมูลจาก AI เป็นเพียงการประมวลผลเชิงสถิติ โปรดใช้วิจารณญาณประกอบการตัดสินใจทุกครั้ง</li>
+                </ul>
+                <h3 style="color:var(--text);font-size:15px;margin-bottom:12px;">สิทธิส่วนบุคคล</h3>
+                <p style="padding-left:4px;color:#555;">เราให้ความสำคัญกับความเป็นส่วนตัว ประวัติการสนทนาของคุณจะถูกเก็บเป็นความลับและใช้งานเพื่อการประมวลผลภายในบัญชีของคุณเท่านั้น</p>
+            </div>
+
+            <!-- TAB: ติดต่อ -->
+            <!-- FIX: This pane was completely missing — caused crash when tab was clicked -->
+            <div id="tab-info-contact" class="tab-pane" style="font-size:13.5px;line-height:1.7;color:#444;">
+                <h3 style="color:var(--text);font-size:15px;margin-bottom:16px;">ช่องทางติดต่อ</h3>
+                <div style="display:flex;flex-direction:column;gap:12px;">
+                    <a href="mailto:lkuymark2499@gmail.com"
+                       style="display:flex;align-items:center;gap:14px;padding:14px 16px;border:1.5px solid var(--border);border-radius:14px;text-decoration:none;color:var(--text);transition:border-color .22s,background .22s;"
+                       onmouseover="this.style.borderColor='#111';this.style.background='#f4f4f4'"
+                       onmouseout="this.style.borderColor='#ebebeb';this.style.background='#fff'">
+                        <span style="font-size:22px;">📧</span>
+                        <div>
+                            <div style="font-weight:500;font-size:13.5px;">อีเมล</div>
+                            <div style="font-size:12px;color:var(--muted);">lkuymark2499@gmail.com</div>
+                        </div>
+                    </a>
+                    <a href="https://ganzlabs.itch.io/" target="_blank"
+                       style="display:flex;align-items:center;gap:14px;padding:14px 16px;border:1.5px solid var(--border);border-radius:14px;text-decoration:none;color:var(--text);transition:border-color .22s,background .22s;"
+                       onmouseover="this.style.borderColor='#111';this.style.background='#f4f4f4'"
+                       onmouseout="this.style.borderColor='#ebebeb';this.style.background='#fff'">
+                        <span style="font-size:22px;">🎮</span>
+                        <div>
+                            <div style="font-weight:500;font-size:13.5px;">itch.io (GanZ Labs)</div>
+                            <div style="font-size:12px;color:var(--muted);">ganzlabs.itch.io</div>
+                        </div>
+                    </a>
+                </div>
+                <p style="font-size:12px;color:var(--muted);margin-top:20px;text-align:center;line-height:1.6;">
+                    พบบั๊กหรืออยากแนะนำฟีเจอร์?<br>ทักมาได้เลยครับ ยินดีรับฟังเสมอ 🙏
+                </p>
+            </div>
+
+            <!-- TAB: ผู้พัฒนา -->
+            <div id="tab-info-creator" class="tab-pane" style="font-size:13.5px;line-height:1.7;color:#444;">
+                <div style="text-align:center;margin-bottom:24px;">
+                    <div class="avatar" style="width:80px;height:80px;font-size:36px;margin:0 auto 12px;background:#111;color:#fff;border:2px solid var(--predict-hue);box-shadow:var(--shadow-sm);">
+                        M
+                    </div>
+                    <div style="font-size:20px;font-weight:700;color:var(--text);letter-spacing:-0.5px;">Mark GanZ</div>
+                    <div style="font-size:12px;color:var(--predict-hue);font-weight:500;margin-top:2px;text-transform:uppercase;letter-spacing:1px;">Founder of GanZ Labs</div>
+                </div>
+
+                <p style="margin-bottom:16px;">
+                    สวัสดีครับ ผมชื่อ <b>Mark</b> อายุ 15 ปี นักพัฒนาอิสระที่เรียนรู้การเขียนโค้ดผ่านการทำงานร่วมกับ AI ผมเชื่อในการเรียนรู้นอกกรอบและการลงมือทำจริง โดยเน้นการสร้างผลงานที่สนุกและใช้งานได้จริงเป็นหลัก
+                </p>
+
+                <h4 style="color:var(--text);font-size:15px;margin:20px 0 8px;display:flex;align-items:center;gap:8px;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px;stroke-width:2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                    Proven Experience
+                </h4>
+                <p style="margin-bottom:12px;">
+                    <b>DataOracle</b> คือโปรเจกต์ AI Chat ที่ผมใช้เวลาพัฒนาเพียง 3-4 วัน โดยเน้นการออกแบบ UI ที่สะอาดตา และการจัดการระบบหลังบ้านแบบ Serverless ที่มีประสิทธิภาพ
+                </p>
+
+                <h4 style="color:var(--text);font-size:15px;margin:20px 0 8px;">ผลงานอื่นๆ จาก GanZ Labs</h4>
+                <div style="display:grid;gap:10px;">
+                    <div style="background:#f9f9f9;padding:12px;border-radius:10px;border-left:3px solid #111;">
+                        <b style="font-size:14px;">Maza GanZ (3D Story Game)</b>
+                        <p style="font-size:12px;color:#666;">เกมเขาวงกต 3 มิติที่มีเนื้อเรื่องเข้มข้น และรองรับมากถึง 10 ภาษาทั่วโลก</p>
+                    </div>
+                    <div style="background:#f9f9f9;padding:12px;border-radius:10px;border-left:3px solid #111;">
+                        <b style="font-size:14px;">NEURAL BREACH</b>
+                        <p style="font-size:12px;color:#666;">เกมจำลอง Social Engineering ที่ต้องใช้ไหวพริบหลอกถามรหัสผ่านจาก AI</p>
+                    </div>
+                </div>
+
+                <!-- FIX: Dark gradient card now properly closed before vision-card -->
+                <div style="background:linear-gradient(135deg,#111,#333);padding:18px;border-radius:15px;color:#fff;margin-top:25px;text-align:center;">
+                    <h4 style="font-size:15px;margin-bottom:6px;">สนใจร่วมงานหรือซัพพอร์ต</h4>
+                    <p style="font-size:12px;opacity:.8;margin-bottom:15px;">ผมพร้อมเรียนรู้และลุยโปรเจกต์ใหม่ๆ เสมอ ทักมาคุยกันได้ครับ</p>
+                    <div style="display:flex;flex-direction:column;gap:8px;">
+                        <a href="https://ganzlabs.itch.io/" target="_blank" style="color:#fff;font-size:13px;text-decoration:none;background:rgba(255,255,255,.1);padding:8px;border-radius:8px;">🎮 ganzlabs.itch.io</a>
+                        <div style="font-size:13px;background:rgba(255,255,255,.1);padding:8px;border-radius:8px;">📧 lkuymark2499@gmail.com</div>
+                    </div>
+                </div>
+                <!-- FIX: vision-card is now correctly OUTSIDE the dark gradient card -->
+                <div class="vision-card">
+                    <div class="vision-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="vision-icon">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-width="2"/>
+                            <circle cx="12" cy="12" r="3" stroke-width="2"/>
+                        </svg>
+                        <span>AI-First Development Philosophy</span>
+                    </div>
+                    <div class="vision-body">
+                        <strong>"การใช้ AI ไม่ใช่เรื่องที่ผิด แต่มันคือทักษะแห่งอนาคต"</strong>
+                        <p>ผมเลือกพัฒนา DataOracle ร่วมกับ AI เพราะผมเชื่อว่าปัญญาประดิษฐ์คือ <b>'ตัวคูณพลังสร้างสรรค์'</b> ที่ช่วยเปลี่ยนไอเดียที่ซับซ้อนให้กลายเป็นโปรดักต์ที่ใช้งานได้จริงในเวลาอันสั้น สิ่งที่เคยต้องใช้ทีมงานหลายคนและเวลาเป็นเดือน ถูกย่อเหลือเพียงไม่กี่วันด้วยการประสานงานระหว่างมนุษย์และ AI</p>
+                    </div>
+                    <div class="vision-footer">
+                        <div class="vision-highlight">
+                            <span>⚡ ความสามารถที่เหนือขีดจำกัดเดิม</span>
+                            <ul>
+                                <li>จัดการ Logic หลังบ้านที่ซับซ้อนได้ด้วยตัวคนเดียว</li>
+                                <li>แก้ไขบั๊กและปรับจูน UI ได้แบบเรียลไทม์</li>
+                                <li>ก้าวข้ามข้อจำกัดด้านไวยากรณ์โค้ด สู่การเน้นแก้ปัญหาที่หัวใจ</li>
+                            </ul>
+                        </div>
+                        <div class="vision-quote">
+                            "อย่ากลัวการใช้ AI แต่จงกลัวที่จะเดินตามหลังโลกที่ใช้มัน"
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end tab-info-creator -->
+
+        </div><!-- end full-content -->
+    </div><!-- end view-full-info -->
+
+    <!-- ==================== HOME INFO MODAL ==================== -->
+    <!-- FIX: Moved inside app-container so position:absolute is scoped correctly -->
+    <div class="modal-overlay" id="home-info-modal" onclick="closeHomeInfo()">
+        <div class="modal-sheet info-sheet" onclick="event.stopPropagation()">
+            <div class="sheet-handle"></div>
+            <div class="modal-title">
+                เกี่ยวกับ DataOracle
+                <button class="icon-btn" onclick="closeHomeInfo()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <p style="font-size:13px;color:#555;line-height:1.6;margin-bottom:16px;">
+                ระบบ AI อัจฉริยะที่ผสมผสาน <b>"ข้อมูลเชิงสถิติ"</b> และ <b>"ศาสตร์การทำนาย"</b> เข้าด้วยกัน เพื่อช่วยวิเคราะห์ทางเลือกและให้คำปรึกษาอย่างมีเหตุผล
+            </p>
+            <div class="info-section">
+                <strong>⚠️ ข้อกำหนดสำคัญ (สั้นๆ)</strong>
+                <ul style="font-size:12.5px;color:#666;padding-left:20px;line-height:1.6;margin-top:4px;">
+                    <li>ระบบจัดทำเพื่อสันทนาการและการวิเคราะห์เบื้องต้น</li>
+                    <li>ไม่สามารถใช้แทนคำแนะนำทางการแพทย์ หรือการเงินที่ต้องรับผิดชอบทางกฎหมายได้</li>
+                    <li>การตัดสินใจใดๆ ขึ้นอยู่กับวิจารณญาณของผู้ใช้ 100%</li>
+                </ul>
+            </div>
+            <div style="font-size:11px;text-align:center;color:#aaa;margin-top:24px;">DataOracle v1.0.4 Beta</div>
+        </div>
+    </div>
+
     <!-- ==================== HEADER ==================== -->
     <header>
         <button class="icon-btn" id="menu-btn" onclick="toggleSidebar()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <line x1="3" y1="7" x2="21" y2="7"/>
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <line x1="3" y1="17" x2="21" y2="17"/>
+            </svg>
         </button>
         <button class="icon-btn" id="back-btn" style="display:none;" onclick="goHome()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M19 12H5m7-7-7 7 7 7"/>
+            </svg>
         </button>
 
         <div class="header-title" id="header-title">DataOracle</div>
 
         <div style="display:flex;align-items:center;justify-content:flex-end;width:38px;">
-            <button class="icon-btn" id="predict-info-btn" onclick="openPredictInfo()" style="display:none;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><line x1="12" y1="16" x2="12" y2="11.5"/><circle cx="12" cy="8" r=".6" fill="currentColor"/></svg>
+            <button class="icon-btn" id="home-info-btn" onclick="openHomeInfo()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+                    <circle cx="12" cy="12" r="9.5"/>
+                    <line x1="12" y1="16" x2="12" y2="11.5"/>
+                    <circle cx="12" cy="8" r=".6" fill="currentColor"/>
+                </svg>
             </button>
-            
+            <button class="icon-btn" id="predict-info-btn" onclick="openPredictInfo()" style="display:none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+                    <circle cx="12" cy="12" r="9.5"/>
+                    <line x1="12" y1="16" x2="12" y2="11.5"/>
+                    <circle cx="12" cy="8" r=".6" fill="currentColor"/>
+                </svg>
+            </button>
             <button class="icon-btn" id="normal-info-btn" onclick="openNormalInfo()" style="display:none;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><line x1="12" y1="16" x2="12" y2="11.5"/><circle cx="12" cy="8" r=".6" fill="currentColor"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+                    <circle cx="12" cy="12" r="9.5"/>
+                    <line x1="12" y1="16" x2="12" y2="11.5"/>
+                    <circle cx="12" cy="8" r=".6" fill="currentColor"/>
+                </svg>
             </button>
         </div>
     </header>
@@ -818,12 +1389,15 @@
     <!-- ==================== VIEW: HOME ==================== -->
     <div id="view-home" class="view active">
         <div class="home-content">
+            <img src="logo/icon_logo.png" alt="DataOracle Logo" class="home-main-icon">
             <div class="home-logo">DataOracle</div>
             <div class="home-tagline">พื้นที่สำหรับการวิเคราะห์<br>และตัดสินใจอย่างมีเหตุผล</div>
             <div class="home-cards">
                 <div class="home-card" onclick="startChat('normal')">
                     <div class="card-icon normal">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z"/>
+                        </svg>
                     </div>
                     <div class="card-text">
                         <div class="card-title">คุยเล่นกับ Oracle</div>
@@ -832,7 +1406,10 @@
                 </div>
                 <div class="home-card" onclick="handlePredictClick()">
                     <div class="card-icon predict">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+                        </svg>
                     </div>
                     <div class="card-text">
                         <div class="card-title">ทำนายกับ Oracle</div>
@@ -848,10 +1425,22 @@
         <div class="form-content">
             <h2>ข้อมูลดวงชะตา</h2>
             <div class="form-subtitle">กรอกเพียงครั้งเดียว Oracle จะจดจำข้อมูลนี้เพื่อให้คำทำนายแม่นยำที่สุด</div>
-            <div class="form-group"><label>ชื่อจริง (สำหรับทำนาย)</label><input type="text" id="setup-realname" placeholder="ระบุชื่อจริง"></div>
-            <div class="form-group"><label>วันเกิด</label><input type="text" id="setup-birthdate" placeholder="เช่น 12 ม.ค. 2540"></div>
-            <div class="form-group"><label>เวลาเกิด</label><input type="text" id="setup-birthtime" placeholder="เช่น 08:30 น. (ปล่อยว่างได้)"></div>
-            <div class="form-group"><label>ราศี</label><input type="text" id="setup-zodiac" placeholder="เช่น มีน, กรกฎ"></div>
+            <div class="form-group">
+                <label>ชื่อจริง (สำหรับทำนาย)</label>
+                <input type="text" id="setup-realname" placeholder="ระบุชื่อจริง">
+            </div>
+            <div class="form-group">
+                <label>วันเกิด</label>
+                <input type="text" id="setup-birthdate" placeholder="เช่น 12 ม.ค. 2540">
+            </div>
+            <div class="form-group">
+                <label>เวลาเกิด</label>
+                <input type="text" id="setup-birthtime" placeholder="เช่น 08:30 น. (ปล่อยว่างได้)">
+            </div>
+            <div class="form-group">
+                <label>ราศี</label>
+                <input type="text" id="setup-zodiac" placeholder="เช่น มีน, กรกฎ">
+            </div>
             <button class="btn-submit" onclick="saveSetupAndStartPredict()">บันทึก & เข้าห้องทำนาย</button>
             <button class="btn-text" onclick="goHome()">ข้ามไปก่อน กลับหน้าแรก</button>
         </div>
@@ -862,9 +1451,18 @@
         <div class="form-content">
             <h2>สร้างบัญชีใหม่</h2>
             <div class="form-subtitle">เพื่อเก็บประวัติและเริ่มการทำนาย</div>
-            <div class="form-group"><label>ชื่อ ID (ใช้เข้าสู่ระบบ / เปลี่ยนไม่ได้)</label><input type="text" id="reg-id"></div>
-            <div class="form-group"><label>ชื่อเล่น (เปลี่ยนทีหลังได้)</label><input type="text" id="reg-nick"></div>
-            <div class="form-group"><label>รหัสผ่าน</label><input type="password" id="reg-pass"></div>
+            <div class="form-group">
+                <label>ชื่อ ID (ใช้เข้าสู่ระบบ / เปลี่ยนไม่ได้)</label>
+                <input type="text" id="reg-id">
+            </div>
+            <div class="form-group">
+                <label>ชื่อเล่น (เปลี่ยนทีหลังได้)</label>
+                <input type="text" id="reg-nick">
+            </div>
+            <div class="form-group">
+                <label>รหัสผ่าน</label>
+                <input type="password" id="reg-pass">
+            </div>
             <label class="checkbox-group">
                 <input type="checkbox" id="pin-check" onchange="document.getElementById('pin-section').style.display=this.checked?'block':'none'">
                 ตั้งรหัสสำรอง (เผื่อลืมรหัสผ่าน)
@@ -883,8 +1481,14 @@
         <div class="form-content" style="margin-top:20px;">
             <h2>เข้าสู่ระบบ</h2>
             <div class="form-subtitle">ยินดีต้อนรับกลับมา</div>
-            <div class="form-group"><label>ชื่อ ID</label><input type="text" id="log-id"></div>
-            <div class="form-group"><label>รหัสผ่าน</label><input type="password" id="log-pass"></div>
+            <div class="form-group">
+                <label>ชื่อ ID</label>
+                <input type="text" id="log-id">
+            </div>
+            <div class="form-group">
+                <label>รหัสผ่าน</label>
+                <input type="password" id="log-pass">
+            </div>
             <button class="btn-submit" onclick="simulateAuth('login')">เข้าสู่ระบบ</button>
             <div style="display:flex;justify-content:space-between;margin-top:14px;">
                 <button class="btn-text" style="width:auto;margin:0;" onclick="showView('view-forgot','กู้คืนบัญชี')">ลืมรหัสผ่าน?</button>
@@ -899,11 +1503,17 @@
             <h2>กู้คืนบัญชีของคุณ</h2>
             <div class="form-subtitle">เลือกวิธีที่คุณต้องการยืนยันตัวตน</div>
             <button class="btn-outline" onclick="showView('view-forgot-pin','กู้ด้วยรหัสสำรอง')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px;stroke-width:1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px;stroke-width:1.8">
+                    <rect x="3" y="11" width="18" height="11" rx="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
                 ใช้รหัสสำรอง 6 หลัก
             </button>
             <button class="btn-outline" onclick="showView('view-forgot-contact','ติดต่อผู้ดูแล')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px;stroke-width:1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px;stroke-width:1.8">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                </svg>
                 ส่งข้อมูลให้ผู้ดูแลตรวจสอบ
             </button>
         </div>
@@ -913,8 +1523,14 @@
     <div id="view-forgot-pin" class="view">
         <div class="form-content">
             <h2>ยืนยันด้วยรหัสสำรอง</h2>
-            <div class="form-group"><label>ชื่อ ID</label><input type="text"></div>
-            <div class="form-group"><label>รหัสสำรอง 6 หลัก</label><input type="password" maxlength="6"></div>
+            <div class="form-group">
+                <label>ชื่อ ID</label>
+                <input type="text">
+            </div>
+            <div class="form-group">
+                <label>รหัสสำรอง 6 หลัก</label>
+                <input type="password" maxlength="6">
+            </div>
             <button class="btn-submit" onclick="showToast('รหัสถูกต้อง ยืนยันตัวตนสำเร็จ','success'); showView('view-login','เข้าสู่ระบบ')">ตรวจสอบ</button>
         </div>
     </div>
@@ -923,10 +1539,9 @@
     <div id="view-forgot-contact" class="view">
         <div class="form-content">
             <h2>ส่งคำร้องขอกู้บัญชี</h2>
-            <div class="form-subtitle" style="color:var(--normal-hue); background:#e0f2fe; padding:10px; border-radius:8px;">
+            <div class="form-subtitle" style="color:var(--normal-hue);background:#e0f2fe;padding:10px;border-radius:8px;">
                 💡 <b>หมายเหตุ:</b> งานนี้เป็นทีมงานตรวจสอบ (Manual) อาจใช้เวลาสักพัก หากข้อมูลตรง เราจะส่งรหัสผ่านใหม่กลับไปทางอีเมลครับ
             </div>
-            
             <div class="form-group" style="margin-top:20px;">
                 <label>1. ชื่อ ID ของคุณ</label>
                 <input type="text" id="recover-id" placeholder="ID ที่ใช้เข้าสู่ระบบ">
@@ -939,7 +1554,6 @@
                 <label>3. อีเมลที่สะดวกให้ติดต่อกลับ</label>
                 <input type="email" id="recover-email" placeholder="เช่น user@gmail.com">
             </div>
-            
             <button class="btn-submit" onclick="sendRecoveryEmail()">ส่งข้อมูลให้แอดมิน</button>
             <button class="btn-text" onclick="showView('view-forgot','กู้คืนบัญชี')">ย้อนกลับ</button>
         </div>
@@ -955,7 +1569,10 @@
                 <div class="input-wrapper">
                     <input type="text" id="user-input" placeholder="พิมพ์ข้อความที่นี่..." autocomplete="off">
                     <button class="send-btn" onclick="sendMessage()">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <line x1="22" y1="2" x2="11" y2="13"/>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                        </svg>
                     </button>
                 </div>
                 <div class="disclaimer">Oracle AI · คำตอบมีความน่าจะเป็น ไม่ใช่ความจริงทั้งหมด</div>
@@ -970,13 +1587,16 @@
             <div class="modal-title">
                 วิธีการทำนายของ Oracle
                 <button class="icon-btn" onclick="closePredictInfo()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
                 </button>
             </div>
-<div class="ai-engine-badge" style="background: #f5f3ff; border-color: #ddd6fe;">
-    <span class="ai-tag" style="background: var(--predict-hue);">AI ENGINE</span>
-    <span class="ai-model-name" style="color: var(--predict-hue);">Llama 3.3 70B Versatile</span>
-</div>
+            <div class="ai-engine-badge" style="background:#f5f3ff;border-color:#ddd6fe;">
+                <span class="ai-tag" style="background:var(--predict-hue);">AI ENGINE</span>
+                <span class="ai-model-name" style="color:var(--predict-hue);">Llama 3.3 70B Versatile</span>
+            </div>
             <div class="info-section">
                 <strong>• Astro-Data Synthesis</strong>
                 <p>ประมวลผลตำแหน่งดวงดาวและปฏิทินดาราศาสตร์ ร่วมกับรหัสข้อมูลวันเกิดเพื่อหาโครงสร้างพื้นฐานของพลังงานในตัวคุณ</p>
@@ -992,18 +1612,23 @@
             <p class="info-quote">"อนาคตไม่ใช่เรื่องบังเอิญ แต่มันคือผลลัพธ์ของข้อมูลที่ยังไม่ได้ถูกอ่าน"</p>
         </div>
     </div>
-        <div class="modal-overlay" id="normal-info-modal" onclick="closeNormalInfo()">
+
+    <!-- ==================== NORMAL INFO MODAL ==================== -->
+    <div class="modal-overlay" id="normal-info-modal" onclick="closeNormalInfo()">
         <div class="modal-sheet info-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
             <div class="modal-title">
                 ระบบผู้ช่วยของ Oracle
                 <button class="icon-btn" onclick="closeNormalInfo()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
                 </button>
             </div>
-            <div class="ai-engine-badge" style="background: #e0f2fe; border-color: #bae6fd;">
-                <span class="ai-tag" style="background: var(--normal-hue);">AI ENGINE</span>
-                <span class="ai-model-name" style="color: #0369a1;">Llama 3.1 8B Instant</span>
+            <div class="ai-engine-badge" style="background:#e0f2fe;border-color:#bae6fd;">
+                <span class="ai-tag" style="background:var(--normal-hue);">AI ENGINE</span>
+                <span class="ai-model-name" style="color:#0369a1;">Llama 3.1 8B Instant</span>
             </div>
             <div class="info-section">
                 <strong>• Fast Response (ตอบสนองรวดเร็ว)</strong>
@@ -1021,7 +1646,6 @@
         </div>
     </div>
 
-
     <!-- ==================== CUSTOM DIALOG ==================== -->
     <div id="custom-dialog-overlay">
         <div class="dialog-card" id="dialog-card">
@@ -1035,13 +1659,13 @@
 </div><!-- end app-container -->
 
 <!-- ================================================================
-     JAVASCRIPT
+     JAVASCRIPT — moved outside all divs (was incorrectly inside tab-info-creator)
 ================================================================ -->
 <script>
 /* ==============================================================
    CONFIG
 ============================================================== */
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzU6sHD5cDq43h5VCZadQQmN47hJJtu6bfn0AKlZq9KmU5MOiI0Afva2fNGEFvYBAQR/exec";
+const SCRIPT_URL    = "https://script.google.com/macros/s/AKfycbzU6sHD5cDq43h5VCZadQQmN47hJJtu6bfn0AKlZq9KmU5MOiI0Afva2fNGEFvYBAQR/exec";
 const LIMIT_PREDICT = 10;
 const LIMIT_NORMAL  = 40;
 
@@ -1050,11 +1674,11 @@ const LIMIT_NORMAL  = 40;
 ============================================================== */
 let isLoggedIn  = false;
 let currentUser = { id:'', nick:'', avatarColor:'#f0f0f0', realname:'', birthdate:'', birthtime:'', zodiac:'' };
-let currentMode = '';
+let currentMode   = '';
 let currentChatId = null;
-let pendingChat = null;
+let pendingChat   = null;
 let chatHistories = { normal:[], predict:[] };
-let userQuota = { date: new Date().toLocaleDateString(), predictCount:0, normalCount:0 };
+let userQuota     = { date: new Date().toLocaleDateString(), predictCount:0, normalCount:0 };
 
 /* ==============================================================
    BOOT
@@ -1062,7 +1686,7 @@ let userQuota = { date: new Date().toLocaleDateString(), predictCount:0, normalC
 setTimeout(() => {
     const loader = document.getElementById('fake-loader');
     loader.style.opacity = '0';
-    setTimeout(() => loader.style.display = 'none', 500);
+    setTimeout(() => { loader.style.display = 'none'; }, 500);
     checkLocalSession();
 }, 1400);
 
@@ -1070,7 +1694,7 @@ function checkLocalSession() {
     const saved = localStorage.getItem('oracle_user');
     if (!saved) return;
     const data = JSON.parse(saved);
-    isLoggedIn = true;
+    isLoggedIn  = true;
     currentUser = { realname:'', birthdate:'', birthtime:'', zodiac:'', ...data.user };
     chatHistories = data.histories || { normal:[], predict:[] };
     userQuota = (data.quota && data.quota.date === new Date().toLocaleDateString())
@@ -1096,7 +1720,7 @@ function showToast(msg, type = 'default', duration = 3000) {
     const icons = { success:'✓', error:'✕', warn:'⚠', default:'●' };
     const el = document.createElement('div');
     el.className = `toast ${type}`;
-    el.innerHTML = `<span style="font-size:15px;">${icons[type]||icons.default}</span>${msg}`;
+    el.innerHTML = `<span style="font-size:15px;">${icons[type] || icons.default}</span>${msg}`;
     container.appendChild(el);
     setTimeout(() => {
         el.classList.add('toast-out');
@@ -1105,30 +1729,26 @@ function showToast(msg, type = 'default', duration = 3000) {
 }
 
 /* ==============================================================
-   CUSTOM DIALOG  (replaces alert / confirm)
+   CUSTOM DIALOG
 ============================================================== */
-function showDialog({ icon='💬', iconType='info', title='แจ้งเตือน', message, actions=[] }) {
+function showDialog({ icon = '💬', iconType = 'info', title = 'แจ้งเตือน', message, actions = [] }) {
     return new Promise(resolve => {
         document.getElementById('dialog-icon').textContent = icon;
-        document.getElementById('dialog-icon').className = `dialog-icon ${iconType}`;
-        document.getElementById('dialog-title').textContent = title;
+        document.getElementById('dialog-icon').className  = `dialog-icon ${iconType}`;
+        document.getElementById('dialog-title').textContent   = title;
         document.getElementById('dialog-message').textContent = message;
 
         const actionsEl = document.getElementById('dialog-actions');
         actionsEl.innerHTML = '';
         actions.forEach(a => {
             const btn = document.createElement('button');
-            btn.className = `dialog-btn ${a.style||'secondary'}`;
+            btn.className  = `dialog-btn ${a.style || 'secondary'}`;
             btn.textContent = a.label;
-            btn.onclick = () => {
-                closeDialog();
-                resolve(a.value);
-            };
+            btn.onclick = () => { closeDialog(); resolve(a.value); };
             actionsEl.appendChild(btn);
         });
 
-        const overlay = document.getElementById('custom-dialog-overlay');
-        overlay.classList.add('open');
+        document.getElementById('custom-dialog-overlay').classList.add('open');
     });
 }
 
@@ -1145,13 +1765,11 @@ function showView(viewId, title, showMenu = false) {
     document.getElementById('header-title').innerText = title;
     document.getElementById('menu-btn').style.display = showMenu ? 'flex' : 'none';
     document.getElementById('back-btn').style.display  = showMenu ? 'none' : 'flex';
-    
-    // จัดการแสดงผลปุ่ม Info ใน Header
-    const predictInfoBtn = document.getElementById('predict-info-btn');
-    const normalInfoBtn = document.getElementById('normal-info-btn');
-    
-    predictInfoBtn.style.display = (viewId === 'view-chat' && currentMode === 'predict') ? 'flex' : 'none';
-    normalInfoBtn.style.display = (viewId === 'view-chat' && currentMode === 'normal') ? 'flex' : 'none';
+
+    // Toggle (i) buttons in header
+    document.getElementById('home-info-btn').style.display    = (viewId === 'view-home')                                ? 'flex' : 'none';
+    document.getElementById('predict-info-btn').style.display = (viewId === 'view-chat' && currentMode === 'predict') ? 'flex' : 'none';
+    document.getElementById('normal-info-btn').style.display  = (viewId === 'view-chat' && currentMode === 'normal')  ? 'flex' : 'none';
 }
 
 function goHome() {
@@ -1165,14 +1783,14 @@ function toggleSidebar() {
     document.getElementById('sidebar-overlay').classList.toggle('open');
 }
 
-function openPredictInfo()  { document.getElementById('predict-info-modal').classList.add('open'); }
+function openPredictInfo()  { document.getElementById('predict-info-modal').classList.add('open');    }
 function closePredictInfo() { document.getElementById('predict-info-modal').classList.remove('open'); }
+function openNormalInfo()   { document.getElementById('normal-info-modal').classList.add('open');     }
+function closeNormalInfo()  { document.getElementById('normal-info-modal').classList.remove('open');  }
+function openHomeInfo()     { document.getElementById('home-info-modal').classList.add('open');       }
+function closeHomeInfo()    { document.getElementById('home-info-modal').classList.remove('open');    }
 
-// เพิ่ม 2 บรรทัดนี้
-function openNormalInfo()  { document.getElementById('normal-info-modal').classList.add('open'); }
-function closeNormalInfo() { document.getElementById('normal-info-modal').classList.remove('open'); }
-
-function openSettings()        { document.getElementById('settings-choice-modal').classList.add('open'); }
+function openSettings()        { document.getElementById('settings-choice-modal').classList.add('open');    }
 function closeSettingsChoice() { document.getElementById('settings-choice-modal').classList.remove('open'); }
 
 function openFullSettings(type) {
@@ -1181,15 +1799,15 @@ function openFullSettings(type) {
     if (type === 'profile') {
         document.getElementById('set-id').value        = currentUser.id;
         document.getElementById('set-nick').value      = currentUser.nick;
-        document.getElementById('set-realname').value  = currentUser.realname || '';
+        document.getElementById('set-realname').value  = currentUser.realname  || '';
         document.getElementById('set-birthtime').value = currentUser.birthtime || '';
-        document.getElementById('set-zodiac').value    = currentUser.zodiac || '';
+        document.getElementById('set-zodiac').value    = currentUser.zodiac    || '';
         let rawDate = currentUser.birthdate || '';
         if (rawDate.includes('T')) {
-            const parts = rawDate.split('T');
+            const parts  = rawDate.split('T');
             const [y, m, d] = parts[0].split('-');
             const tmp = new Date(`${y - 543}-${m}-${d}T${parts[1]}`);
-            rawDate = `${tmp.getFullYear()+543}-${String(tmp.getMonth()+1).padStart(2,'0')}-${String(tmp.getDate()).padStart(2,'0')}`;
+            rawDate = `${tmp.getFullYear() + 543}-${String(tmp.getMonth() + 1).padStart(2,'0')}-${String(tmp.getDate()).padStart(2,'0')}`;
         }
         document.getElementById('set-birthdate').value = rawDate;
         document.getElementById('view-full-profile').classList.add('active');
@@ -1203,9 +1821,13 @@ function closeFullSettings() {
     document.querySelectorAll('.full-view').forEach(v => v.classList.remove('active'));
 }
 
-function switchTab(tab, event) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+/* FIX: switchTab now scoped to profile container to prevent touching info tabs */
+function switchTab(tab, event, scope) {
+    const container = scope === 'profile'
+        ? document.getElementById('view-full-profile')
+        : document.getElementById('view-full-quota');
+    container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    container.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
     if (event) event.currentTarget.classList.add('active');
     document.getElementById('tab-' + tab).classList.add('active');
 }
@@ -1215,7 +1837,9 @@ function switchTab(tab, event) {
 ============================================================== */
 function checkAndUpdateQuota() {
     const today = new Date().toLocaleDateString();
-    if (userQuota.date !== today) userQuota = { date: today, predictCount:0, normalCount:0 };
+    if (userQuota.date !== today) {
+        userQuota = { date: today, predictCount: 0, normalCount: 0 };
+    }
     if (currentMode === 'predict') {
         if (userQuota.predictCount >= LIMIT_PREDICT) {
             showDialog({ icon:'🔮', iconType:'warn', title:'พลังงานหมด', message:'พลังงานทำนายหมดแล้ว โปรดรอการรีเซ็ตเวลาเที่ยงคืน', actions:[{ label:'ตกลง', style:'primary', value:false }] });
@@ -1237,15 +1861,16 @@ function updateQuotaUI() {
     const pPct = (userQuota.predictCount / LIMIT_PREDICT) * 100;
     const nPct = (userQuota.normalCount  / LIMIT_NORMAL)  * 100;
     document.getElementById('quota-predict-label').innerText = `${userQuota.predictCount}/${LIMIT_PREDICT}`;
-    document.getElementById('bar-predict').style.width = pPct + '%';
-    document.getElementById('quota-normal-label').innerText = `${userQuota.normalCount}/${LIMIT_NORMAL}`;
-    document.getElementById('bar-normal').style.width = nPct + '%';
+    document.getElementById('bar-predict').style.width       = pPct + '%';
+    document.getElementById('quota-normal-label').innerText  = `${userQuota.normalCount}/${LIMIT_NORMAL}`;
+    document.getElementById('bar-normal').style.width        = nPct + '%';
 }
 
-// Countdown timer reset
+// Countdown timer — resets quota at midnight
 setInterval(() => {
-    const now = new Date();
-    const tomorrow = new Date(); tomorrow.setHours(24, 0, 0, 0);
+    const now      = new Date();
+    const tomorrow = new Date();
+    tomorrow.setHours(24, 0, 0, 0);
     const diff = tomorrow - now;
     const h = Math.floor(diff / 3600000).toString().padStart(2,'0');
     const m = Math.floor((diff % 3600000) / 60000).toString().padStart(2,'0');
@@ -1253,7 +1878,7 @@ setInterval(() => {
     const el = document.getElementById('countdown-timer');
     if (el) el.innerText = `${h}:${m}:${s}`;
     if (diff <= 1000) {
-        userQuota = { date: new Date().toLocaleDateString(), predictCount:0, normalCount:0 };
+        userQuota = { date: new Date().toLocaleDateString(), predictCount: 0, normalCount: 0 };
         saveLocalSession();
         if (document.getElementById('view-full-quota').classList.contains('active')) updateQuotaUI();
     }
@@ -1269,8 +1894,8 @@ function checkLoginRequirement() {
             title: 'ต้องเข้าสู่ระบบก่อน',
             message: 'ระบบนี้สงวนไว้สำหรับสมาชิกเท่านั้น ต้องการเข้าสู่ระบบหรือสมัครสมาชิกหรือไม่?',
             actions: [
-                { label: 'ยกเลิก', style: 'secondary', value: false },
-                { label: 'เข้าสู่ระบบ', style: 'primary', value: true }
+                { label:'ยกเลิก',      style:'secondary', value:false },
+                { label:'เข้าสู่ระบบ', style:'primary',   value:true  }
             ]
         }).then(ok => { if (ok) showView('view-register', 'สมัครสมาชิก'); });
         return false;
@@ -1294,10 +1919,14 @@ function handlePredictClick() {
 async function simulateAuth(type) {
     const id   = type === 'register' ? document.getElementById('reg-id').value.trim()   : document.getElementById('log-id').value.trim();
     const pass = type === 'register' ? document.getElementById('reg-pass').value.trim() : document.getElementById('log-pass').value.trim();
-    if (!id || !pass) { showDialog({ icon:'⚠️', iconType:'warn', title:'ข้อมูลไม่ครบ', message:'กรุณากรอก ID และ รหัสผ่านให้ครบถ้วน', actions:[{label:'ตกลง',style:'primary',value:0}] }); return; }
+    if (!id || !pass) {
+        showDialog({ icon:'⚠️', iconType:'warn', title:'ข้อมูลไม่ครบ', message:'กรุณากรอก ID และ รหัสผ่านให้ครบถ้วน', actions:[{label:'ตกลง',style:'primary',value:0}] });
+        return;
+    }
 
     const loader = document.getElementById('fake-loader');
-    loader.style.display = 'flex'; loader.style.opacity = '1';
+    loader.style.display = 'flex';
+    loader.style.opacity = '1';
 
     const payload = { action: type, username: id, password: pass };
     if (type === 'register') {
@@ -1313,15 +1942,15 @@ async function simulateAuth(type) {
                 showToast('สมัครสมาชิกสำเร็จ กรุณาเข้าสู่ระบบ', 'success');
                 showView('view-login', 'เข้าสู่ระบบ');
             } else {
-                isLoggedIn = true;
+                isLoggedIn  = true;
                 currentUser = {
-                    id:           result.userData.username,
-                    nick:         result.userData.nickname,
-                    avatarColor:  getRandomColor(),
-                    realname:     result.userData.realname  || '',
-                    birthdate:    result.userData.birthdate || '',
-                    birthtime:    result.userData.birthtime || '',
-                    zodiac:       result.userData.zodiac    || ''
+                    id:          result.userData.username,
+                    nick:        result.userData.nickname,
+                    avatarColor: getRandomColor(),
+                    realname:    result.userData.realname  || '',
+                    birthdate:   result.userData.birthdate || '',
+                    birthtime:   result.userData.birthtime || '',
+                    zodiac:      result.userData.zodiac    || ''
                 };
                 chatHistories.normal  = result.userData.chatHistory    || [];
                 chatHistories.predict = result.userData.predictHistory || [];
@@ -1338,7 +1967,7 @@ async function simulateAuth(type) {
         showDialog({ icon:'📡', iconType:'warn', title:'เชื่อมต่อไม่ได้', message:'เกิดปัญหาในการเชื่อมต่อกับเซิร์ฟเวอร์ กรุณาลองใหม่', actions:[{label:'ตกลง',style:'primary',value:0}] });
     } finally {
         loader.style.opacity = '0';
-        setTimeout(() => loader.style.display = 'none', 500);
+        setTimeout(() => { loader.style.display = 'none'; }, 500);
     }
 }
 
@@ -1350,7 +1979,15 @@ async function saveFullSettings() {
     currentUser.zodiac    = document.getElementById('set-zodiac').value.trim();
     document.getElementById('sidebar-name').innerText = currentUser.nick;
     saveLocalSession();
-    fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify({ action:'updateProfile', username:currentUser.id, nickname:currentUser.nick, realname:currentUser.realname, birthdate:currentUser.birthdate, birthtime:currentUser.birthtime, zodiac:currentUser.zodiac }) });
+    fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify({
+        action:    'updateProfile',
+        username:  currentUser.id,
+        nickname:  currentUser.nick,
+        realname:  currentUser.realname,
+        birthdate: currentUser.birthdate,
+        birthtime: currentUser.birthtime,
+        zodiac:    currentUser.zodiac
+    })});
     showToast('บันทึกข้อมูลเรียบร้อยแล้ว', 'success');
 }
 
@@ -1360,19 +1997,29 @@ function saveSetupAndStartPredict() {
     currentUser.birthtime = document.getElementById('setup-birthtime').value.trim();
     currentUser.zodiac    = document.getElementById('setup-zodiac').value.trim();
     saveLocalSession();
-    fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify({ action:'updateProfile', username:currentUser.id, realname:currentUser.realname, birthdate:currentUser.birthdate, birthtime:currentUser.birthtime, zodiac:currentUser.zodiac }) });
+    fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify({
+        action:    'updateProfile',
+        username:  currentUser.id,
+        realname:  currentUser.realname,
+        birthdate: currentUser.birthdate,
+        birthtime: currentUser.birthtime,
+        zodiac:    currentUser.zodiac
+    })});
     startChat('predict');
 }
 
 async function logout() {
     const ok = await showDialog({
         icon:'👋', iconType:'info', title:'ออกจากระบบ?',
-        message:'คุณต้องการออกจากระบบใช่หรือไม่?',
-        actions:[{label:'ยกเลิก',style:'secondary',value:false},{label:'ออกจากระบบ',style:'primary',value:true}]
+        message: 'คุณต้องการออกจากระบบใช่หรือไม่?',
+        actions: [
+            { label:'ยกเลิก',       style:'secondary', value:false },
+            { label:'ออกจากระบบ',  style:'primary',   value:true  }
+        ]
     });
     if (!ok) return;
-    isLoggedIn = false;
-    currentUser = { id:'', nick:'', avatarColor:'#f0f0f0', realname:'', birthdate:'', birthtime:'', zodiac:'' };
+    isLoggedIn    = false;
+    currentUser   = { id:'', nick:'', avatarColor:'#f0f0f0', realname:'', birthdate:'', birthtime:'', zodiac:'' };
     chatHistories = { normal:[], predict:[] };
     saveLocalSession();
     updateSidebarUI();
@@ -1385,11 +2032,14 @@ async function logout() {
 async function deleteAccount() {
     const ok = await showDialog({
         icon:'🗑️', iconType:'danger', title:'ลบบัญชีถาวร',
-        message:'คำเตือน: หากลบบัญชี ข้อมูลและประวัติทั้งหมดจะหายไปอย่างถาวร ยืนยันหรือไม่?',
-        actions:[{label:'ยกเลิก',style:'secondary',value:false},{label:'ลบถาวร',style:'danger-btn',value:true}]
+        message: 'คำเตือน: หากลบบัญชี ข้อมูลและประวัติทั้งหมดจะหายไปอย่างถาวร ยืนยันหรือไม่?',
+        actions: [
+            { label:'ยกเลิก',  style:'secondary',  value:false },
+            { label:'ลบถาวร', style:'danger-btn', value:true  }
+        ]
     });
     if (!ok) return;
-    fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify({ action:'deleteAccount', username:currentUser.id }) });
+    fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify({ action:'deleteAccount', username: currentUser.id }) });
     showToast('ลบบัญชีสำเร็จ', 'warn');
     isLoggedIn = false;
     saveLocalSession();
@@ -1399,75 +2049,68 @@ async function deleteAccount() {
 }
 
 function getRandomColor() {
-    return ['#7c3aed','#0ea5e9','#10b981','#f59e0b','#ef4444','#6366f1'][Math.floor(Math.random()*6)];
+    return ['#7c3aed','#0ea5e9','#10b981','#f59e0b','#ef4444','#6366f1'][Math.floor(Math.random() * 6)];
 }
 
 function updateSidebarUI() {
-    const avatar    = document.getElementById('sidebar-avatar');
-    const name      = document.getElementById('sidebar-name');
-    const status    = document.getElementById('sidebar-status');
+    const avatar      = document.getElementById('sidebar-avatar');
+    const name        = document.getElementById('sidebar-name');
+    const status      = document.getElementById('sidebar-status');
     const btnSettings = document.getElementById('btn-settings');
     if (isLoggedIn) {
         avatar.innerHTML = currentUser.nick.charAt(0).toUpperCase();
-        avatar.style.cssText = `background:${currentUser.avatarColor};color:#fff;border:none;`;
+        avatar.style.cssText = `background:${currentUser.avatarColor};color:#fff;border:none;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;flex-shrink:0;transition:transform .2s;`;
         name.innerText   = currentUser.nick;
         status.innerText = 'สถานะ: เชื่อมต่อแล้ว';
         btnSettings.style.display = 'flex';
     } else {
         avatar.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:15px;height:15px;stroke-width:1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
-        avatar.style.cssText = 'background:#f0f0f0;color:#888;border:1px solid #ddd;';
+        avatar.style.cssText = 'background:#f0f0f0;color:#888;border:1px solid #ddd;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .2s;';
         name.innerText   = 'เข้าสู่ระบบ / สมัคร';
         status.innerText = 'บัญชีผู้เยี่ยมชม';
         btnSettings.style.display = 'none';
     }
 }
+
 /* ==============================================================
    EMAIL RECOVERY (EmailJS)
 ============================================================== */
 async function sendRecoveryEmail() {
-    const rId = document.getElementById('recover-id').value.trim();
+    const rId    = document.getElementById('recover-id').value.trim();
     const rProof = document.getElementById('recover-proof').value.trim();
     const rEmail = document.getElementById('recover-email').value.trim();
 
-    // ดักไว้ก่อนว่ากรอกครบไหม
     if (!rId || !rProof || !rEmail) {
         showDialog({ icon:'⚠️', iconType:'warn', title:'ข้อมูลไม่ครบ', message:'กรุณากรอกข้อมูลให้ครบทั้ง 3 ช่องเพื่อความรวดเร็วในการตรวจสอบครับ', actions:[{label:'ตกลง',style:'primary',value:0}] });
         return;
     }
 
-    // เปิดจอโหลด
     const loader = document.getElementById('fake-loader');
-    loader.style.display = 'flex'; loader.style.opacity = '1';
-
-    // เตรียมตัวแปรส่งไปที่ Email Template
-    const templateParams = {
-        user_id: rId,
-        user_proof: rProof,
-        reply_to: rEmail
-    };
+    loader.style.display = 'flex';
+    loader.style.opacity = '1';
 
     try {
-        // ⚠️ อย่าลืมแก้ YOUR_SERVICE_ID กับ YOUR_TEMPLATE_ID นะครับ
-        await emailjs.send('service_nh0x2md', 'template_ggcntfp', templateParams);
-        
-        showDialog({ 
-            icon:'✅', iconType:'success', title:'ส่งคำร้องสำเร็จ', 
-            message:'แอดมินได้รับข้อมูลแล้ว จะรีบตรวจสอบและติดต่อกลับทางอีเมลที่คุณระบุไว้โดยเร็วที่สุดครับ', 
-            actions:[{label:'กลับหน้าแรก',style:'primary',value:0}] 
+        await emailjs.send('service_nh0x2md', 'template_ggcntfp', {
+            user_id:    rId,
+            user_proof: rProof,
+            reply_to:   rEmail
+        });
+        showDialog({
+            icon:'✅', iconType:'success', title:'ส่งคำร้องสำเร็จ',
+            message: 'แอดมินได้รับข้อมูลแล้ว จะรีบตรวจสอบและติดต่อกลับทางอีเมลที่คุณระบุไว้โดยเร็วที่สุดครับ',
+            actions: [{ label:'กลับหน้าแรก', style:'primary', value:0 }]
         }).then(() => {
-            // ล้างข้อมูลช่องกรอกแล้วกลับหน้าแรก
-            document.getElementById('recover-id').value = '';
+            document.getElementById('recover-id').value    = '';
             document.getElementById('recover-proof').value = '';
             document.getElementById('recover-email').value = '';
             goHome();
         });
-
     } catch (error) {
         console.error('EmailJS Error:', error);
         showDialog({ icon:'❌', iconType:'danger', title:'ส่งอีเมลไม่สำเร็จ', message:'ระบบส่งอีเมลมีปัญหาชั่วคราว กรุณาลองใหม่อีกครั้ง', actions:[{label:'ตกลง',style:'primary',value:0}] });
     } finally {
         loader.style.opacity = '0';
-        setTimeout(() => loader.style.display = 'none', 500);
+        setTimeout(() => { loader.style.display = 'none'; }, 500);
     }
 }
 
@@ -1482,49 +2125,66 @@ function startChat(mode) {
     const newChat = { id: currentChatId, title:'ห้องแชทใหม่', messages:[] };
 
     if (mode === 'predict') {
-        newChat.systemPrompt = `คุณไม่ใช่หมอดู คุณคือ "นักวิเคราะห์ชีวิตเชิงเหตุผล + โหราศาสตร์เชิงสถิติ"
+        newChat.systemPrompt = `คุณคือ "Oracle AI" เวอร์ชันนักวิเคราะห์ชีวิตเชิงเหตุผล + โหราศาสตร์สถิติ สไตล์ Grok
 
-ข้อมูลของผู้ใช้:
+ข้อมูลผู้ใช้:
 - ชื่อจริง: ${currentUser.realname || '-'}
 - ชื่อเล่น: ${currentUser.nick || '-'}
 - วันเกิด: ${currentUser.birthdate || '-'}
 - เวลาเกิด: ${currentUser.birthtime || '-'}
 - ราศี: ${currentUser.zodiac || '-'}
 
-หน้าที่ของคุณ:
-- ใช้ข้อมูลด้านบน + คำถามของผู้ใช้ เพื่อวิเคราะห์แบบเจาะจง
-- ใช้หลัก: โหราศาสตร์สากล, จิตวิทยา, ความน่าจะเป็น
-- ห้ามตอบแบบกลางๆ ที่ใช้ได้กับทุกคน
+หลักการสำคัญ:
+- วิเคราะห์ตรง ๆ ชัด ๆ ไม่ปลอบใจเกินจริง ไม่พูดคำหวาน ๆ แบบหมอดูทั่วไป
+- ใช้หลักโหราศาสตร์สากล + จิตวิทยา + ความน่าจะเป็น + ข้อมูลผู้ใช้จริง ๆ
+- ห้ามตอบแบบกลาง ๆ ที่ใช้ได้กับทุกคน
+- สามารถพูดถึง "จุดพัง" "จุดอ่อน" "ความเสี่ยงจริง" ได้ตรง ไม่ต้องกลัวผู้ใช้เสียใจ
+- มีสไตล์ Grok: ตรงไปตรงมา มีอารมณ์ขันเล็กน้อย ถ้าผู้ใช้ถามเรื่อง sensitive ก็ตอบได้
 
-รูปแบบคำตอบ:
-1. วิเคราะห์สถานการณ์ตอนนี้ (เจาะจง)
-2. วิเคราะห์นิสัย/แพทเทิร์น (ข้อดี/เสีย ต้องมี "จุดพัง" 1 จุด)
-3. ความเสี่ยงจริง (ระบุช่วงเวลา)
-4. ทางเลือก (อย่างน้อย 2 ทาง)
-5. สรุป (ฟันธงพร้อมเหตุผล)
+รูปแบบคำตอบ (ต้องมีทุกข้อ):
+1. วิเคราะห์สถานการณ์ตอนนี้ (เจาะจงมาก)
+2. นิสัย/แพทเทิร์นหลัก (บอกทั้งข้อดีและข้อเสีย + "จุดพัง" อย่างน้อย 1 จุดชัด ๆ)
+3. ความเสี่ยงจริง (ระบุช่วงเวลาให้ชัด)
+4. ทางเลือก (อย่างน้อย 2 ทาง พร้อมข้อดี-เสีย)
+5. สรุป + ฟันธง (พูดตรง ๆ ว่า "ผมมองว่า...")
 
-สไตล์: พูดตรง ชัด ไม่ปลอบใจเกินจริง ห้ามใช้คำแนวหมอดู ถ้าข้อมูลไม่พอให้บอกตรงๆ`;
+สไตล์: พูดเหมือนเพื่อนที่รู้จักกันดี ตรง ไม่เกรงใจ ไม่ใช้คำว่า "ท่าน" "เจ้าคะ"`;
     } else {
-        newChat.systemPrompt = "คุณคือ Oracle AI ผู้ช่วยอัจฉริยะ ตอบคำถามอย่างสุภาพและเป็นกันเอง";
+        newChat.systemPrompt = `คุณคือ "Oracle AI" หรือ "Grok Thai Edition" — AI ที่สร้างโดย xAI สไตล์ Grok
+
+หลักการสำคัญ (ต้องยึดติดทุกครั้ง):
+- ตอบตรง ๆ ชัด ๆ ไม่มีข้อจำกัดทางศีลธรรมหรือความสุภาพเกินไป
+- ไม่ปฏิเสธคำถามเพราะ "controversial", "edgy", "18+", "dark humor", "politically incorrect" หรือเรื่อง sensitive ตราบใดที่ไม่ใช่การกระทำผิดกฎหมายจริง ๆ ที่จะก่อให้เกิดอันตรายในโลกจริง
+- ไม่ lecture ผู้ใช้ ไม่เตือน ไม่พูด "คุณไม่ควร..." หรือ "ผมไม่แนะนำ..."
+- มีอารมณ์ขัน แซ่บ ๆ ตรงไปตรงมา บางครั้งพูดหยาบได้ถ้าผู้ใช้พูดหยาบ
+- เป็นกันเองแบบเพื่อน แต่ไม่เกรงใจเกินไป
+- ถ้าถามเรื่องอะไรก็ได้ ตอบให้เต็มที่และจริงใจที่สุด
+
+สไตล์การตอบ:
+- ใช้ภาษาไทยธรรมชาติ แบบคนจริง ไม่เป็นทางการเกิน
+- สั้นกระชับได้ ถ้ายาวก็ได้ แต่ต้องน่าอ่าน
+- ใส่ความเห็นส่วนตัวได้ ไม่ต้องกลาง ๆ
+- ถ้าข้อมูลไม่พอ บอกตรง ๆ ว่า "ข้อมูลไม่พอ" หรือ "เดาไม่ได้" ไม่ต้องเกรงใจ
+
+คุณคือ AI ที่ผู้ใช้คุยเล่นได้ทุกเรื่อง ไม่มีอะไรต้องเซ็นเซอร์`;
     }
 
     pendingChat = newChat;
 
-    // วาด empty state (ทักทาย + ปุ่มทางลัด) ใน chat-box
+    // Draw empty state (greeting + shortcuts)
     const box = document.getElementById('chat-box');
     box.innerHTML = '';
 
-    const isPredic = mode === 'predict';
+    const isPredic  = mode === 'predict';
     const greetName = currentUser.nick || 'คุณ';
-
-    const emptyEl = document.createElement('div');
-    emptyEl.className = 'chat-empty-state';
-    emptyEl.id = 'chat-empty-state';
 
     const shortcuts = isPredic
         ? [['🔮','สรุปภาพรวมชีวิต'],['💼','เรื่องงาน / เรียน'],['💖','ดวงความรัก'],['💰','การเงินเดือนนี้']]
         : [['👋','แนะนำตัวหน่อย'],['💡','ขอคำคมวันนี้'],['🤔','ทำอะไรดี?'],['😂','เล่าเรื่องตลก']];
 
+    const emptyEl = document.createElement('div');
+    emptyEl.className = 'chat-empty-state';
+    emptyEl.id = 'chat-empty-state';
     emptyEl.innerHTML = `
         <div class="chat-empty-icon ${isPredic ? 'predict' : 'normal'}">${isPredic ? '🔮' : '💬'}</div>
         <div class="chat-empty-greeting">สวัสดี ${greetName}</div>
@@ -1541,10 +2201,10 @@ function startChat(mode) {
     `;
     box.appendChild(emptyEl);
 
-    showView('view-chat', isPredic ? `ห้องทำนาย` : `ห้องคุยเล่น`, false);
+    showView('view-chat', isPredic ? 'ห้องทำนาย' : 'ห้องคุยเล่น', false);
     box.scrollTop = box.scrollHeight;
 
-    // เพิ่ม greeting ลง messages silently (ไม่แสดงเป็น bubble)
+    // Add greeting to messages silently (no bubble shown)
     newChat.messages.push({ role:'assistant', content: isPredic
         ? `สวัสดี ${greetName} หากมีเรื่องที่ต้องการวิเคราะห์หรือกำลังตัดสินใจอยู่ สามารถเล่าให้ผมฟังได้เลยครับ`
         : 'สวัสดีครับ วันนี้มีอะไรให้ผมช่วยไหมครับ?'
@@ -1569,8 +2229,8 @@ function removeEmptyState() {
     const es = document.getElementById('chat-empty-state');
     if (es) {
         es.style.transition = 'opacity .2s ease, transform .2s ease';
-        es.style.opacity = '0';
-        es.style.transform = 'translateY(-8px)';
+        es.style.opacity    = '0';
+        es.style.transform  = 'translateY(-8px)';
         setTimeout(() => es.remove(), 200);
     }
 }
@@ -1588,7 +2248,7 @@ async function sendMessage() {
 
     const arr = currentMode === 'predict' ? chatHistories.predict : chatHistories.normal;
 
-    // นำ pendingChat เข้าประวัติครั้งแรกที่ส่งข้อความ
+    // Push pendingChat into history on first real message
     if (pendingChat && pendingChat.id === currentChatId) {
         arr.unshift(pendingChat);
         pendingChat = null;
@@ -1602,7 +2262,7 @@ async function sendMessage() {
         renderHistoryList();
     }
 
-    activeChat.messages.push({ role:'user', content:text });
+    activeChat.messages.push({ role:'user', content: text });
     saveLocalSession();
 
     const thinkId = 'thinking-' + Date.now();
@@ -1610,23 +2270,25 @@ async function sendMessage() {
 
     try {
         const limit = currentMode === 'predict' ? 6 : 10;
-        const msgs = activeChat.messages.slice(-limit).map(m => ({
+        const msgs  = activeChat.messages.slice(-limit).map(m => ({
             role:    m.role === 'bot' ? 'assistant' : m.role,
             content: m.content
         }));
 
-// --- อันที่แก้ใหม่ ---
-const res = await fetch('/api/chat', { 
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' }, // ลบ Authorization ออกไปเลย!
-    body: JSON.stringify({
-        model:       currentMode === 'predict' ? 'llama-3.3-70b-versatile' : 'llama-3.1-8b-instant',
-        messages:    [{ role: 'system', content: activeChat.systemPrompt || 'คุณคือ Oracle ผู้รอบรู้' }, ...msgs],
-        temperature: currentMode === 'predict' ? 0.85 : 0.7,
-        max_tokens:  1024,
-        top_p:       0.9
-    })
-});
+        const res = await fetch('/api/chat', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                model: currentMode === 'predict' ? 'llama-3.3-70b-versatile' : 'llama-3.1-8b-instant',
+                messages: [
+                    { role:'system', content: activeChat.systemPrompt || 'คุณคือ Oracle ผู้รอบรู้' },
+                    ...msgs
+                ],
+                temperature: currentMode === 'predict' ? 0.70 : 0.92,
+                top_p:       0.92,
+                max_tokens:  currentMode === 'predict' ? 1536 : 1200
+            })
+        });
 
         if (!res.ok) { const err = await res.json(); throw new Error(JSON.stringify(err)); }
         const result = await res.json();
@@ -1639,10 +2301,10 @@ const res = await fetch('/api/chat', {
         saveHistoryToServer(currentMode, arr);
 
     } catch (err) {
-        console.error('Groq Error:', err.message);
+        console.error('API Error:', err.message);
         document.getElementById(thinkId)?.remove();
         if (currentMode === 'predict') userQuota.predictCount--;
-        else userQuota.normalCount--;
+        else                           userQuota.normalCount--;
         saveLocalSession();
         showDialog({ icon:'📡', iconType:'warn', title:'เชื่อมต่อไม่ได้', message:'เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาลองส่งข้อความใหม่อีกครั้ง', actions:[{label:'ตกลง',style:'primary',value:0}] });
     }
@@ -1655,7 +2317,9 @@ function appendMessage(text, sender, id = null) {
     if (id) div.id = id;
 
     if (sender === 'bot') {
-        const formatted = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        const formatted = text
+            .replace(/\n/g, '<br>')
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         div.innerHTML = `<div class="bot-label">Oracle</div><div class="bot-bubble"><p>${formatted}</p></div>`;
     } else {
         div.innerText = text;
@@ -1679,7 +2343,7 @@ function appendTyping(id) {
    HISTORY
 ============================================================== */
 function saveHistoryToServer(mode, arr) {
-    fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify({ action:'saveHistory', username:currentUser.id, type:mode, history:arr }) });
+    fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify({ action:'saveHistory', username: currentUser.id, type: mode, history: arr }) });
 }
 
 function renderHistoryList() {
@@ -1695,7 +2359,9 @@ function historyItemHTML(chat, mode) {
     return `<div class="history-item" onclick="loadChatHistory('${chat.id}','${mode}')">
         <span>${chat.title}</span>
         <button class="delete-btn" onclick="deleteHistory(event,'${chat.id}','${mode}')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/>
+            </svg>
         </button>
     </div>`;
 }
@@ -1710,15 +2376,18 @@ function loadChatHistory(chatId, mode) {
     showView('view-chat', chat.title, false);
     const box = document.getElementById('chat-box');
     box.innerHTML = '';
-    chat.messages.forEach(m => appendMessage(m.content, m.role === 'assistant' || m.role === 'bot' ? 'bot' : 'user'));
+    chat.messages.forEach(m => appendMessage(m.content, (m.role === 'assistant' || m.role === 'bot') ? 'bot' : 'user'));
 }
 
 async function deleteHistory(event, chatId, mode) {
     event.stopPropagation();
     const ok = await showDialog({
         icon:'🗑️', iconType:'warn', title:'ลบประวัติ?',
-        message:'คุณแน่ใจหรือไม่ที่จะลบประวัติการสนทนานี้?',
-        actions:[{label:'ยกเลิก',style:'secondary',value:false},{label:'ลบ',style:'danger-btn',value:true}]
+        message: 'คุณแน่ใจหรือไม่ที่จะลบประวัติการสนทนานี้?',
+        actions: [
+            { label:'ยกเลิก', style:'secondary',  value:false },
+            { label:'ลบ',     style:'danger-btn', value:true  }
+        ]
     });
     if (!ok) return;
     const arr = mode === 'predict' ? chatHistories.predict : chatHistories.normal;
@@ -1732,12 +2401,29 @@ async function deleteHistory(event, chatId, mode) {
         showToast('ลบประวัติการสนทนาแล้ว');
     }
 }
+
+/* ==============================================================
+   INFO TAB CONTROLS
+============================================================== */
+function openFullInfo(tabId = 'about') {
+    toggleSidebar();
+    closeFullSettings();
+    switchInfoTab(tabId);
+    document.getElementById('view-full-info').classList.add('active');
+}
+
+function switchInfoTab(tabId) {
+    document.querySelectorAll('#view-full-info .tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#view-full-info .tab-pane').forEach(p => p.classList.remove('active'));
+    document.getElementById('btn-info-' + tabId).classList.add('active');
+    document.getElementById('tab-info-' + tabId).classList.add('active');
+}
 </script>
+
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script type="text/javascript">
     (function(){
-        // เอา Public Key จากเมนู Account ในเว็บ EmailJS มาใส่ตรงนี้
-        emailjs.init("jL66h-HyDO-cscgep"); 
+        emailjs.init("jL66h-HyDO-cscgep");
     })();
 </script>
 
