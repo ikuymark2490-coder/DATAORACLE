@@ -3,7 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DataOracle</title>
+<title>DataOracle - AI วิเคราะห์ชีวิตและดวงชะตาแม่นๆ สไตล์ Grok</title>
+<meta name="description" content="พื้นที่สำหรับการวิเคราะห์และตัดสินใจอย่างมีเหตุผล โดยใช้ขุมพลัง AI Llama 3.3 พร้อมคำตอบที่ตรงไปตรงมาและจริงใจ">
+<meta name="keywords" content="AI, ดูดวง, วิเคราะห์ดวง, ทำนายอนาคต, DataOracle, GanZ Labs, Grok Thai">
+<meta property="og:site_name" content="DataOracle by GanZ Labs">
+<meta property="og:title" content="ลองถาม DataOracle หรือยัง? AI ที่จะเปลี่ยนทุกคำถามเป็นคำตอบที่แม่นยำ">
+<meta property="og:description" content="วิเคราะห์ดวงชะตาและพูดคุยกับ AI สาย Unfiltered ได้แล้ววันนี้">
+<meta property="og:url" content="https://data-oracle.vercel.app">
+<meta property="og:image" content="https://data-oracle.vercel.app/logo/logo_banner.png"> 
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="logo/logo_icon1.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DataOracle - AI วิเคราะห์ดวงชะตาแม่นๆ">
+<meta name="twitter:description" content="พื้นที่สำหรับการวิเคราะห์และตัดสินใจอย่างมีเหตุผล โดยใช้ขุมพลัง AI">
+<meta name="twitter:image" content="https://data-oracle.vercel.app/logo/logo_banner.png">
     <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Sarabun:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
@@ -964,6 +979,78 @@
             padding: 10px;
             border-top: 1px dashed var(--border);
         }
+        
+                /* ============================================================
+           PREMIUM REPORT UI
+        ============================================================ */
+        .report-type-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .type-card {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 18px;
+            padding: 20px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .type-card:active { transform: scale(0.96); }
+        .type-card .type-icon {
+            color: var(--muted);
+            transition: all 0.25s ease;
+        }
+        .type-card .type-icon svg { width: 28px; height: 28px; stroke-width: 1.5; }
+        .type-card .type-label {
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--muted);
+            transition: all 0.25s ease;
+        }
+        
+        /* สถานะตอนถูกเลือก (Active) */
+        .type-card.active {
+            border-color: var(--text);
+            background: var(--accent-soft);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+        .type-card.active .type-icon {
+            color: var(--text);
+            transform: scale(1.15);
+        }
+        .type-card.active .type-label {
+            color: var(--text);
+            font-weight: 600;
+        }
+        
+        /* ช่องกรอกข้อความที่ดูแพงขึ้น */
+        .premium-textarea {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 18px;
+            padding: 16px 18px;
+            font-family: 'Prompt', sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            width: 100%;
+            outline: none;
+            transition: all 0.25s ease;
+            resize: none;
+            color: var(--text);
+        }
+        .premium-textarea::placeholder { color: #bbb; }
+        .premium-textarea:focus {
+            border-color: var(--text);
+            box-shadow: 0 0 0 4px var(--accent-soft);
+        }
+
     </style>
 </head>
 <body>
@@ -1172,7 +1259,7 @@
             <div class="tab-header" style="margin-bottom:20px;">
                 <button class="tab-btn active" id="btn-info-about"   onclick="switchInfoTab('about')">เกี่ยวกับเรา</button>
                 <button class="tab-btn"         id="btn-info-rules"   onclick="switchInfoTab('rules')">นโยบาย</button>
-                <button class="tab-btn"         id="btn-info-contact" onclick="switchInfoTab('contact')">ติดต่อ</button>
+                <button class="tab-btn"         id="btn-info-contact" onclick="switchInfoTab('contact')">ติดต่อ-แจ้งปัญหา</button>
                 <button class="tab-btn"         id="btn-info-creator" onclick="switchInfoTab('creator')">ผู้พัฒนา</button>
             </div>
 
@@ -1233,9 +1320,15 @@
                         </div>
                     </a>
                 </div>
-                <p style="font-size:12px;color:var(--muted);margin-top:20px;text-align:center;line-height:1.6;">
+                                <p style="font-size:12px;color:var(--muted);margin-top:20px;text-align:center;line-height:1.6;">
                     พบบั๊กหรืออยากแนะนำฟีเจอร์?<br>ทักมาได้เลยครับ ยินดีรับฟังเสมอ 🙏
                 </p>
+                
+                <button class="btn-submit" onclick="openReportForm()" style="margin-top: 12px; background: var(--text);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px;vertical-align:middle;margin-right:6px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    แจ้งปัญหา / เสนอแนะ
+                </button>
+
             </div>
 
             <!-- TAB: ผู้พัฒนา -->
@@ -1315,7 +1408,7 @@
                     <span class="sub-text">โดยไม่เสียโมเมนตัมในการพัฒนา</span>
                 </li>
                 <li>ก้าวข้ามข้อจำกัดทางภาษาและไวยากรณ์ของโค้ด<br>
-                    <span class="sub-text">เพื่อให้โฟกัสกับการแก้ปัญหาที่แท้จริงและคุณค่าที่จะส่งมอบให้ผู้ใช้</span>
+                    <span class="sub-text">เพื่อให้专注กับการแก้ปัญหาที่แท้จริงและคุณค่าที่จะส่งมอบให้ผู้ใช้</span>
                 </li>
             </ul>
         </div>
@@ -1484,7 +1577,7 @@
                 ตั้งรหัสสำรอง (เผื่อลืมรหัสผ่าน)
             </label>
             <div class="form-group" id="pin-section" style="display:none;margin-top:12px;">
-                <label>รหัสสำรอง 6 หลัก [!คำเตือน รหัสสำรองตั้งได้ แต่ใช้ไม่ได้ หากแต่เป็นได้เพียงหลักฐานส่งให้แอดมิน]</label>
+                <label>รหัสสำรอง 6 หลัก</label>
                 <input type="password" id="reg-pin" placeholder="ตัวเลข 6 หลัก" maxlength="6">
             </div>
             <button class="btn-submit" onclick="simulateAuth('register')">สมัครสมาชิก</button>
@@ -1518,7 +1611,7 @@
         <div class="form-content">
             <h2>กู้คืนบัญชีของคุณ</h2>
             <div class="form-subtitle">เลือกวิธีที่คุณต้องการยืนยันตัวตน</div>
-            <button class="btn-outline" onclick="showView('view-forgot-pin','กู้ด้วยรหัสสำรอง [DEMO-ใช้ไม่ได้]')">
+            <button class="btn-outline" onclick="showView('view-forgot-pin','กู้ด้วยรหัสสำรอง')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px;stroke-width:1.8">
                     <rect x="3" y="11" width="18" height="11" rx="2"/>
                     <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
@@ -1535,43 +1628,52 @@
         </div>
     </div>
 
-    <!-- ==================== VIEW: FORGOT PIN ==================== -->
     <div id="view-forgot-pin" class="view">
         <div class="form-content">
-            <h2>ยืนยันด้วยรหัสสำรอง [DEMO-ใช้ไม่ได้]</h2>
+            <h2>ยืนยันด้วยรหัสสำรอง</h2>
             <div class="form-group">
                 <label>ชื่อ ID</label>
-                <input type="text">
+                <input type="text" id="recover-pin-id" placeholder="ID ที่ใช้เข้าสู่ระบบ">
             </div>
             <div class="form-group">
                 <label>รหัสสำรอง 6 หลัก</label>
-                <input type="password" maxlength="6">
+                <input type="password" id="recover-pin-code" maxlength="6" placeholder="ตัวเลข 6 หลัก">
             </div>
-            <button class="btn-submit" onclick="showToast('รหัสถูกต้อง ยืนยันตัวตนสำเร็จ','success'); showView('view-login','เข้าสู่ระบบ')">ตรวจสอบ [DEMO-ใช้ไม่ได้]</button>
+            <button class="btn-submit" onclick="simulateAuth('login_pin')">ตรวจสอบและเข้าสู่ระบบ</button>
+            <button class="btn-text" onclick="showView('view-forgot','กู้คืนบัญชี')">ย้อนกลับ</button>
         </div>
     </div>
 
-    <!-- ==================== VIEW: FORGOT CONTACT ==================== -->
-    <div id="view-forgot-contact" class="view">
-        <div class="form-content">
-            <h2>ส่งคำร้องขอกู้บัญชี</h2>
-            <div class="form-subtitle" style="color:var(--normal-hue);background:#e0f2fe;padding:10px;border-radius:8px;">
-                💡 <b>หมายเหตุ:</b> งานนี้เป็นทีมงานตรวจสอบ (Manual) อาจใช้เวลาสักพัก หากข้อมูลตรง เราจะส่งรหัสผ่านใหม่กลับไปทางอีเมลครับ
+    <div id="view-report-issue" class="view">
+        <div class="form-content" style="max-width: 460px;">
+            <div style="text-align: center; margin-bottom: 28px;">
+                <h2 style="font-size: 22px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 8px;">ส่งรายงานถึง GanZ Labs</h2>
+                <div style="font-size: 13px; color: var(--muted); line-height: 1.5;">พบปัญหา หรือมีข้อเสนอแนะให้ DataOracle?<br>พิมพ์ส่งถึงผู้พัฒนาได้โดยตรง</div>
             </div>
-            <div class="form-group" style="margin-top:20px;">
-                <label>1. ชื่อ ID ของคุณ</label>
-                <input type="text" id="recover-id" placeholder="ID ที่ใช้เข้าสู่ระบบ">
+            
+            <div class="report-type-cards">
+                <div class="type-card active" onclick="selectReportType(this, 'bug')">
+                    <div class="type-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    </div>
+                    <div class="type-label">แจ้งปัญหา / บั๊ก</div>
+                </div>
+                
+                <div class="type-card" onclick="selectReportType(this, 'feature')">
+                    <div class="type-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    </div>
+                    <div class="type-label">ข้อเสนอแนะ</div>
+                </div>
             </div>
-            <div class="form-group">
-                <label>2. ชื่อเล่น หรือ ชื่อประวัติแชทอันไหนก็ได้ 1 ชื่อ</label>
-                <input type="text" id="recover-proof" placeholder="หลักฐานยืนยันตัวตนว่าเป็นคุณจริงๆ">
+            <input type="hidden" id="report-type" value="bug">
+            
+            <div class="form-group" style="margin-bottom: 24px;">
+                <textarea id="report-message" class="premium-textarea" rows="5" placeholder="อธิบายปัญหาที่พบ หรือข้อผิดพลาดของระบบ..."></textarea>
             </div>
-            <div class="form-group">
-                <label>3. อีเมลที่สะดวกให้ติดต่อกลับ</label>
-                <input type="email" id="recover-email" placeholder="เช่น user@gmail.com">
-            </div>
-            <button class="btn-submit" onclick="sendRecoveryEmail()">ส่งข้อมูลให้แอดมิน</button>
-            <button class="btn-text" onclick="showView('view-forgot','กู้คืนบัญชี')">ย้อนกลับ</button>
+
+            <button class="btn-submit" onclick="submitReportTest()" style="padding: 16px; font-size: 15px; border-radius: 16px;">ส่งรายงาน</button>
+            <button class="btn-text" onclick="goHome()">ยกเลิก / กลับหน้าแรก</button>
         </div>
     </div>
 
@@ -1933,21 +2035,49 @@ function handlePredictClick() {
 }
 
 async function simulateAuth(type) {
-    const id   = type === 'register' ? document.getElementById('reg-id').value.trim()   : document.getElementById('log-id').value.trim();
-    const pass = type === 'register' ? document.getElementById('reg-pass').value.trim() : document.getElementById('log-pass').value.trim();
-    if (!id || !pass) {
-        showDialog({ icon:'⚠️', iconType:'warn', title:'ข้อมูลไม่ครบ', message:'กรุณากรอก ID และ รหัสผ่านให้ครบถ้วน', actions:[{label:'ตกลง',style:'primary',value:0}] });
-        return;
+    if (window.isAuthenticating) return; // ป้องกันการกดปุ่มซ้ำ
+
+    let id = '', pass = '', pin = '', nick = '';
+
+    if (type === 'register') {
+        id   = document.getElementById('reg-id').value.trim();
+        pass = document.getElementById('reg-pass').value.trim();
+        nick = document.getElementById('reg-nick').value.trim() || id;
+        pin  = document.getElementById('reg-pin').value.trim();
+        if (!id || !pass) {
+            showDialog({ icon:'⚠️', iconType:'warn', title:'ข้อมูลไม่ครบ', message:'กรุณากรอก ID และ รหัสผ่านให้ครบถ้วน', actions:[{label:'ตกลง',style:'primary',value:0}] });
+            return;
+        }
+    } else if (type === 'login') {
+        id   = document.getElementById('log-id').value.trim();
+        pass = document.getElementById('log-pass').value.trim();
+        if (!id || !pass) {
+            showDialog({ icon:'⚠️', iconType:'warn', title:'ข้อมูลไม่ครบ', message:'กรุณากรอก ID และ รหัสผ่าน', actions:[{label:'ตกลง',style:'primary',value:0}] });
+            return;
+        }
+    } else if (type === 'login_pin') {
+        id  = document.getElementById('recover-pin-id').value.trim();
+        pin = document.getElementById('recover-pin-code').value.trim();
+        if (!id || !pin) {
+            showDialog({ icon:'⚠️', iconType:'warn', title:'ข้อมูลไม่ครบ', message:'กรุณากรอก ID และ รหัสสำรอง 6 หลัก', actions:[{label:'ตกลง',style:'primary',value:0}] });
+            return;
+        }
     }
 
+    window.isAuthenticating = true;
     const loader = document.getElementById('fake-loader');
     loader.style.display = 'flex';
     loader.style.opacity = '1';
 
-    const payload = { action: type, username: id, password: pass };
+    const payload = { action: type, username: id };
     if (type === 'register') {
-        payload.nickname = document.getElementById('reg-nick').value.trim() || id;
-        payload.pincode  = document.getElementById('reg-pin').value.trim() || '';
+        payload.password = pass;
+        payload.nickname = nick;
+        payload.pincode  = pin;
+    } else if (type === 'login') {
+        payload.password = pass;
+    } else if (type === 'login_pin') {
+        payload.pincode = pin;
     }
 
     try {
@@ -1974,6 +2104,12 @@ async function simulateAuth(type) {
                 updateSidebarUI();
                 renderHistoryList();
                 showToast(`ยินดีต้อนรับกลับมา ${currentUser.nick} 👋`, 'success');
+                
+                // ล้างช่องกรอก PIN ถ้าล็อกอินสำเร็จ
+                if(type === 'login_pin') {
+                    document.getElementById('recover-pin-id').value = '';
+                    document.getElementById('recover-pin-code').value = '';
+                }
                 goHome();
             }
         } else {
@@ -1983,7 +2119,10 @@ async function simulateAuth(type) {
         showDialog({ icon:'📡', iconType:'warn', title:'เชื่อมต่อไม่ได้', message:'เกิดปัญหาในการเชื่อมต่อกับเซิร์ฟเวอร์ กรุณาลองใหม่', actions:[{label:'ตกลง',style:'primary',value:0}] });
     } finally {
         loader.style.opacity = '0';
-        setTimeout(() => { loader.style.display = 'none'; }, 500);
+        setTimeout(() => { 
+            loader.style.display = 'none'; 
+            window.isAuthenticating = false;
+        }, 500);
     }
 }
 
@@ -2434,6 +2573,92 @@ function switchInfoTab(tabId) {
     document.getElementById('btn-info-' + tabId).classList.add('active');
     document.getElementById('tab-info-' + tabId).classList.add('active');
 }
+
+/* ==============================================================
+   REPORT ISSUE (ฟอร์มแจ้งปัญหาทดสอบ)
+============================================================== */
+function openReportForm() {
+    closeFullSettings(); // สั่งปิดหน้าต่าง "ข้อมูลระบบ" แบบเต็มจอไปก่อน
+    showView('view-report-issue', 'แจ้งปัญหา / เสนอแนะ'); // เปิดหน้าต่างฟอร์ม
+}
+
+async function submitReportTest() {
+    const type = document.getElementById('report-type').value;
+    const msg = document.getElementById('report-message').value.trim();
+    
+    if (!msg) {
+        showDialog({ 
+            icon:'⚠️', iconType:'warn', title:'ข้อมูลไม่ครบ', 
+            message:'กรุณาระบุรายละเอียดก่อนกดส่งด้วยครับ', 
+            actions:[{label:'ตกลง',style:'primary',value:0}] 
+        });
+        return;
+    }
+    
+    const loader = document.getElementById('fake-loader');
+    loader.style.display = 'flex'; loader.style.opacity = '1';
+
+    // เตรียมข้อมูลส่งไปที่ Sheet
+    const payload = {
+        action: 'report',
+        project: 'DataOracle',
+        type: type,
+        message: msg,
+        username: currentUser.id || 'Guest'
+    };
+
+    try {
+        const res = await fetch(SCRIPT_URL, { 
+            method: 'POST', 
+            body: JSON.stringify(payload) 
+        });
+        const result = await res.json();
+
+        if (result.success) {
+            showDialog({ 
+                icon:'✅', iconType:'success', title:'ส่งรายงานสำเร็จ', 
+                message:'ขอบคุณสำหรับข้อมูลครับ ผมจะรีบตรวจสอบและนำไปปรับปรุง', 
+                actions:[{label:'ตกลง',style:'primary',value:0}] 
+            }).then(() => {
+                document.getElementById('report-message').value = '';
+                goHome();
+            });
+        } else {
+            showDialog({ icon:'❌', iconType:'danger', title:'ส่งไม่สำเร็จ', message: 'มีปัญหาจากฝั่งเซิร์ฟเวอร์', actions:[{label:'ตกลง',style:'primary',value:0}] });
+        }
+    } catch (e) {
+        showDialog({ 
+            icon:'❌', iconType:'danger', title:'ส่งไม่สำเร็จ', 
+            message:'เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์ กรุณาลองใหม่อีกครั้ง', 
+            actions:[{label:'ลองใหม่',style:'primary',value:0}] 
+        });
+    } finally {
+        loader.style.opacity = '0';
+        setTimeout(() => { loader.style.display = 'none'; }, 500);
+    }
+}
+
+/* ==============================================================
+   REPORT UI INTERACTION
+============================================================== */
+function selectReportType(element, type) {
+    // ลบสถานะ active จากการ์ดทั้งหมด
+    document.querySelectorAll('.type-card').forEach(c => c.classList.remove('active'));
+    // เพิ่มสถานะ active ให้การ์ดที่กด
+    element.classList.add('active');
+    // อัปเดตค่าที่ซ่อนไว้เพื่อเตรียมส่ง
+    document.getElementById('report-type').value = type;
+    
+    // เปลี่ยนคำใบ้ในช่องกรอกให้เข้ากับบริบท
+    const textarea = document.getElementById('report-message');
+    if(type === 'bug') {
+        textarea.placeholder = "อธิบายปัญหาที่พบ หรือข้อผิดพลาดของระบบ...";
+    } else {
+        textarea.placeholder = "มีไอเดียอะไรเจ๋งๆ อยากให้เราเพิ่ม เล่าให้ฟังหน่อย...";
+    }
+}
+
+
 </script>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -2444,4 +2669,4 @@ function switchInfoTab(tabId) {
 </script>
 
 </body>
-    </html>
+                        </html>
