@@ -20,6 +20,12 @@
 <meta name="twitter:description" content="พื้นที่สำหรับการวิเคราะห์และตัดสินใจอย่างมีเหตุผล โดยใช้ขุมพลัง AI">
 <meta name="twitter:image" content="https://data-oracle.vercel.app/logo/logo_banner.png">
     <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Sarabun:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="logo/logo_icon1.png">
+<link rel="icon" type="image/png" sizes="32x32" href="logo/logo_icon1.png">
+<link rel="icon" type="image/png" sizes="192x192" href="logo/logo_icon1.png">
+<link rel="icon" type="image/png" sizes="512x512" href="logo/logo_icon1.png">
+<meta name="theme-color" content="#050810">
+
 
     <style>
         /* ============================================================
@@ -1050,6 +1056,15 @@
             border-color: var(--text);
             box-shadow: 0 0 0 4px var(--accent-soft);
         }
+        /* ป้องกันการแตกและเพิ่มความคมชัดให้โลโก้ */
+.loader-logo-img, .home-main-icon {
+    image-rendering: -webkit-optimize-contrast; /* สำหรับ Safari/Chrome */
+    image-rendering: crisp-edges;               /* สำหรับ Firefox และมาตรฐานใหม่ */
+    max-width: 100%;
+    height: auto;
+    /* แถม: ช่วยให้การขยับ/Animation ดูลื่นขึ้น */
+    backface-visibility: hidden;
+}
 
     </style>
 </head>
@@ -2669,4 +2684,4 @@ function selectReportType(element, type) {
 </script>
 
 </body>
-            </html>
+                </html>
